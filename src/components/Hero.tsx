@@ -29,13 +29,6 @@ export function Hero() {
           animate="visible"
           className="max-w-3xl"
         >
-          <motion.div variants={itemVariants}>
-            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-8">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              {personal.availability}
-            </span>
-          </motion.div>
-
           <motion.h1
             variants={itemVariants}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"

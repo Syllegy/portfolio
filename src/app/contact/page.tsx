@@ -76,13 +76,10 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-sm font-semibold">{personal.availability}</span>
-            </div>
+          <div className="bg-card border border-border rounded-xl p-6">
+            <p className="text-sm font-semibold mb-2">Currently available for freelance work</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              I&apos;m currently taking on freelance projects involving website development, frontend improvements, technical SEO, maintenance, bug fixes, and performance optimization.
+              I&apos;m taking on projects involving website development, frontend improvements, technical SEO, maintenance, bug fixes, and performance optimization.
             </p>
           </div>
         </AnimateIn>

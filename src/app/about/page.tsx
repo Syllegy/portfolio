@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin, Mail, Briefcase } from "lucide-react";
+import { MapPin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -57,16 +57,6 @@ export default function AboutPage() {
                 <div>
                   <dt className="text-muted-foreground text-xs uppercase tracking-wide mb-0.5">Location</dt>
                   <dd className="font-medium">{personal.location}</dd>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Briefcase className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                <div>
-                  <dt className="text-muted-foreground text-xs uppercase tracking-wide mb-0.5">Status</dt>
-                  <dd className="font-medium flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    {personal.availability}
-                  </dd>
                 </div>
               </div>
               <div className="flex items-start gap-3">

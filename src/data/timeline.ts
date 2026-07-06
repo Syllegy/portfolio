@@ -29,7 +29,7 @@ export const timeline: TimelineItem[] = [
     type: "work",
   },
   {
-    year: "2024 – Present",
+    year: "2025 – Present",
     title: "Self-Taught Developer",
     description:
       "Continuously expanding my knowledge through hands-on development, real client work, and modern development tools. Building projects to deepen expertise across the full stack.",
