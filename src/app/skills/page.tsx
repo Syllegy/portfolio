@@ -6,7 +6,7 @@ import { personal } from "@/data/personal";
 
 export const metadata: Metadata = {
   title: "Skills",
-  description: `Technical skills and expertise of ${personal.name} — ${personal.title}.`,
+  description: `Technologies and tools used by ${personal.name} — ${personal.title}.`,
 };
 
 export default function SkillsPage() {
@@ -14,8 +14,8 @@ export default function SkillsPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <AnimateIn className="mb-12">
         <SectionHeading
-          title="Skills & Expertise"
-          subtitle="Tools, technologies, and practices I use to deliver great results."
+          title="Skills & Technologies"
+          subtitle="Tools and technologies I use across my work."
         />
       </AnimateIn>
       <SkillsGrid />

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Mail, Code2 } from "lucide-react";
-import { GitHubIcon, LinkedInIcon } from "./icons";
+import { GitHubIcon } from "./icons";
 import { personal } from "@/data/personal";
 
 export function Footer() {
@@ -11,7 +11,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-3">
+            <Link href="/" className="flex items-center gap-2 font-bold text-base mb-3">
               <Code2 className="w-5 h-5 text-primary" />
               {personal.name}
             </Link>
@@ -21,7 +21,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">
+            <h3 className="font-semibold mb-3 text-xs uppercase tracking-wider text-muted-foreground">
               Navigation
             </h3>
             <ul className="space-y-2 text-sm">
@@ -45,10 +45,10 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">
+            <h3 className="font-semibold mb-3 text-xs uppercase tracking-wider text-muted-foreground">
               Connect
             </h3>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <a
                 href={personal.github}
                 target="_blank"
@@ -57,15 +57,6 @@ export function Footer() {
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <GitHubIcon className="w-5 h-5" />
-              </a>
-              <a
-                href={personal.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <LinkedInIcon className="w-5 h-5" />
               </a>
               <a
                 href={`mailto:${personal.email}`}
@@ -86,7 +77,7 @@ export function Footer() {
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>© {year} {personal.name}. All rights reserved.</p>
-          <p>Built with Next.js, Tailwind CSS & Framer Motion</p>
+          <p>Built with Next.js & Tailwind CSS</p>
         </div>
       </div>
     </footer>

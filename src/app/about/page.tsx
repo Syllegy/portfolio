@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { MapPin, Mail, Briefcase } from "lucide-react";
-import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Timeline } from "@/components/Timeline";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AnimateIn } from "@/components/AnimateIn";
+import { GitHubIcon } from "@/components/icons";
 import { personal } from "@/data/personal";
 
 export const metadata: Metadata = {
@@ -17,19 +17,17 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      {/* Header */}
       <AnimateIn className="mb-16">
         <SectionHeading
           title="About Me"
-          subtitle="The story behind the code."
+          subtitle="The story behind the work."
         />
       </AnimateIn>
 
-      {/* Bio section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24">
         <AnimateIn className="lg:col-span-2 space-y-5" direction="right">
           {personal.bio.split("\n\n").map((para, idx) => (
-            <p key={idx} className="text-muted-foreground leading-relaxed text-base">
+            <p key={idx} className="text-muted-foreground leading-relaxed">
               {para}
             </p>
           ))}
@@ -46,18 +44,12 @@ export default function AboutPage() {
                 GitHub
               </a>
             </Button>
-            <Button asChild variant="outline" className="gap-2">
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">
-                <LinkedInIcon className="w-4 h-4" />
-                LinkedIn
-              </a>
-            </Button>
           </div>
         </AnimateIn>
 
-        <AnimateIn direction="left" delay={0.2}>
+        <AnimateIn direction="left" delay={0.15}>
           <div className="bg-card border border-border rounded-2xl p-6 space-y-5">
-            <h3 className="font-bold text-lg">Quick Info</h3>
+            <h3 className="font-semibold text-base">Quick Info</h3>
             <Separator />
             <dl className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
@@ -82,7 +74,10 @@ export default function AboutPage() {
                 <div>
                   <dt className="text-muted-foreground text-xs uppercase tracking-wide mb-0.5">Email</dt>
                   <dd>
-                    <a href={`mailto:${personal.email}`} className="font-medium hover:text-primary transition-colors break-all">
+                    <a
+                      href={`mailto:${personal.email}`}
+                      className="font-medium hover:text-primary transition-colors break-all"
+                    >
                       {personal.email}
                     </a>
                   </dd>
@@ -92,19 +87,19 @@ export default function AboutPage() {
 
             <Separator />
             <div>
-              <h4 className="text-xs uppercase tracking-wide text-muted-foreground mb-3">What I Offer</h4>
+              <h4 className="text-xs uppercase tracking-wide text-muted-foreground mb-3">Focus Areas</h4>
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Full-Stack Dev",
-                  "Frontend",
-                  "API Design",
+                  "Web Development",
                   "Technical SEO",
+                  "Shopify",
+                  "WordPress",
                   "Performance",
-                  "DevOps",
-                  "CMS Integration",
-                  "Code Review",
+                  "Bug Fixes",
+                  "Frontend",
+                  "Maintenance",
                 ].map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
+                  <Badge key={tag} variant="secondary" className="text-xs font-normal">
                     {tag}
                   </Badge>
                 ))}
@@ -114,9 +109,8 @@ export default function AboutPage() {
         </AnimateIn>
       </div>
 
-      {/* Timeline */}
-      <AnimateIn className="mb-6">
-        <SectionHeading title="Experience & Education" />
+      <AnimateIn className="mb-10">
+        <SectionHeading title="Experience" />
       </AnimateIn>
       <Timeline />
     </div>
