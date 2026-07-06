@@ -25,7 +25,7 @@ export const projects: Project[] = [
       "Ongoing development, technical SEO, and maintenance for one of the leading online sports nutrition and fitness retailers.",
     longDescription:
       "Contributing to the ongoing improvement, optimization, and maintenance of the Bodybuilding.com Shopify storefront — helping deliver a faster, more reliable, and search-engine-friendly shopping experience.",
-    image: "/images/project-bodybuilding.svg",
+    image: "/images/project-bodybuilding.png",
     technologies: [
       "Shopify",
       "JavaScript",
