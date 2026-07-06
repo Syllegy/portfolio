@@ -4,13 +4,13 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AnimateIn } from "@/components/AnimateIn";
+import { ProjectsClient } from "./ProjectsClient";
 import { personal } from "@/data/personal";
 import { projects } from "@/data/projects";
-import { ProjectsClient } from "./ProjectsClient";
 
 export const metadata: Metadata = {
-  title: "Projects",
-  description: `Web development projects by ${personal.name}.`,
+  title: "Professional Work",
+  description: `Client projects and professional work by ${personal.name}.`,
 };
 
 export default function ProjectsPage() {
@@ -19,16 +19,15 @@ export default function ProjectsPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
         <AnimateIn className="mb-12">
           <SectionHeading
-            title="Projects"
-            subtitle="A portfolio of client work and personal projects."
+            title="Professional Work"
+            subtitle="Client projects and ongoing work."
           />
         </AnimateIn>
-
         <AnimateIn delay={0.1}>
           <div className="border border-dashed border-border rounded-2xl p-16 text-center">
             <p className="text-2xl font-semibold mb-3">Coming Soon</p>
             <p className="text-muted-foreground max-w-md mx-auto mb-8">
-              Case studies and project details are being prepared. In the meantime, feel free to reach out directly to discuss my work.
+              Case studies are being prepared. In the meantime, feel free to reach out directly to discuss my work.
             </p>
             <Button asChild className="gap-2">
               <Link href="/contact">
@@ -46,8 +45,8 @@ export default function ProjectsPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <AnimateIn className="mb-12">
         <SectionHeading
-          title="Projects"
-          subtitle="A collection of client work and personal projects."
+          title="Professional Work"
+          subtitle="Client projects and ongoing development work."
         />
       </AnimateIn>
       <ProjectsClient projects={projects} />

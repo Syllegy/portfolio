@@ -10,7 +10,7 @@ A close friend brought me onto his development team and mentored me through real
 
 Today I focus on building, repairing, and optimizing websites that not only look great but also perform well in search engines while providing exceptional user experiences.
 
-I enjoy solving problems across the entire development cycle — from frontend interfaces and backend functionality to SEO and performance optimization.
+I enjoy solving problems across the entire development cycle, from frontend interfaces and backend functionality to SEO and performance optimization.
 
 Whether a project involves modernizing an outdated website, repairing existing functionality, improving performance, implementing technical SEO, or developing new features, I find practical solutions that deliver measurable results.`,
   location: "Remote / Worldwide",
