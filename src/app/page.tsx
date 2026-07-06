@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Hero } from "@/components/Hero";
+import { StarField } from "@/components/StarField";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { SkillsGrid } from "@/components/SkillsGrid";
 import { Timeline } from "@/components/Timeline";
@@ -11,6 +12,7 @@ import { AnimateIn } from "@/components/AnimateIn";
 export default function HomePage() {
   return (
     <>
+      <StarField />
       <Hero />
 
       {/* What I Do */}
