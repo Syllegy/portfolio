@@ -24,7 +24,7 @@ export const projects: Project[] = [
     description:
       "Ongoing development, technical SEO, and maintenance for one of the leading online sports nutrition and fitness retailers.",
     longDescription:
-      "Contributing to the ongoing improvement, optimization, and maintenance of the Bodybuilding.com Shopify storefront — helping deliver a faster, more reliable, and search-engine-friendly shopping experience.",
+      "Contributing to the ongoing improvement, optimization, and maintenance of the Bodybuilding.com Shopify storefront, helping deliver a faster, more reliable, and search-engine-friendly shopping experience.",
     image: "/images/project-bodybuilding.png",
     technologies: [
       "Shopify",
@@ -39,9 +39,9 @@ export const projects: Project[] = [
     ongoing: true,
     category: "Shopify",
     problem:
-      "A large-scale production Shopify storefront required continuous improvement across technical SEO, Core Web Vitals, mobile responsiveness, and frontend functionality — all while maintaining uninterrupted uptime and shipping new features regularly.",
+      "A large-scale production Shopify storefront required continuous improvement across technical SEO, Core Web Vitals, mobile responsiveness, and frontend functionality, all while maintaining uninterrupted uptime and shipping new features regularly.",
     solution:
-      "As part of the development team, I contribute across multiple areas: technical SEO implementation, responsive bug fixes, structured data, performance optimization, and feature development — working collaboratively to improve the storefront while it remains live.",
+      "As part of the development team, I contribute across multiple areas: technical SEO implementation, responsive bug fixes, structured data, performance optimization, and feature development. Everything is done collaboratively while the storefront remains live.",
     contributions: [
       "Fixing responsive layout issues across desktop and mobile devices",
       "Building and enhancing storefront pages and components",

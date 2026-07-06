@@ -67,7 +67,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="pt-0 flex items-center gap-2">
+      <CardFooter className="pt-4 flex items-center gap-2">
         <Button asChild size="sm" className="flex-1 gap-1.5">
           <Link href={`/projects/${project.slug}`}>
             Case Study
