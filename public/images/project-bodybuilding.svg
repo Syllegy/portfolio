@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f14"/>
+      <stop offset="100%" style="stop-color:#1a1624"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#574cd5"/>
+      <stop offset="100%" style="stop-color:#7c6ff7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  </pattern>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+
+  <!-- Top accent bar -->
+  <rect width="1200" height="3" fill="url(#accent)"/>
+
+  <!-- Browser chrome -->
+  <rect x="120" y="80" width="960" height="515" rx="10" fill="#1e1e2e" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- Browser bar -->
+  <rect x="120" y="80" width="960" height="44" rx="10" fill="#16161f"/>
+  <rect x="120" y="104" width="960" height="20" fill="#16161f"/>
+
+  <!-- Traffic lights -->
+  <circle cx="160" cy="102" r="6" fill="#ff5f57"/>
+  <circle cx="180" cy="102" r="6" fill="#ffbd2e"/>
+  <circle cx="200" cy="102" r="6" fill="#28c840"/>
+
+  <!-- URL bar -->
+  <rect x="230" y="91" width="620" height="22" rx="11" fill="rgba(255,255,255,0.06)"/>
+  <text x="540" y="106" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(255,255,255,0.5)" text-anchor="middle">shop.bodybuilding.com</text>
+
+  <!-- Content area -->
+  <rect x="120" y="124" width="960" height="471" rx="0" fill="#f8f8f8"/>
+  <rect x="120" y="124" width="960" height="471" rx="0" fill="rgba(15,15,20,0.85)"/>
+
+  <!-- Center content -->
+  <text x="600" y="340" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-1">Bodybuilding.com</text>
+  <text x="600" y="390" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" fill="rgba(255,255,255,0.45)" text-anchor="middle" letter-spacing="2">SHOP</text>
+
+  <!-- Divider line -->
+  <rect x="500" y="410" width="200" height="2" rx="1" fill="url(#accent)" opacity="0.6"/>
+
+  <!-- Tags -->
+  <rect x="373" y="432" width="110" height="28" rx="14" fill="rgba(87,76,213,0.2)" stroke="rgba(87,76,213,0.4)" stroke-width="1"/>
+  <text x="428" y="451" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">Shopify</text>
+
+  <rect x="499" y="432" width="140" height="28" rx="14" fill="rgba(87,76,213,0.2)" stroke="rgba(87,76,213,0.4)" stroke-width="1"/>
+  <text x="569" y="451" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">Technical SEO</text>
+
+  <rect x="655" y="432" width="172" height="28" rx="14" fill="rgba(87,76,213,0.2)" stroke="rgba(87,76,213,0.4)" stroke-width="1"/>
+  <text x="741" y="451" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="rgba(255,255,255,0.7)" text-anchor="middle">Performance Opt.</text>
+
+  <!-- Bottom bar inside browser -->
+  <rect x="120" y="565" width="960" height="30" fill="rgba(0,0,0,0.3)"/>
+  <circle cx="606" cy="580" r="4" fill="rgba(87,76,213,0.6)"/>
+  <circle cx="594" cy="580" r="4" fill="rgba(255,255,255,0.15)"/>
+  <circle cx="618" cy="580" r="4" fill="rgba(255,255,255,0.15)"/>
+</svg>
