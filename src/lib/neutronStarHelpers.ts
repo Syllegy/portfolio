@@ -2,9 +2,21 @@
 
 export type RGB = [number, number, number];
 
+// ── Easing ────────────────────────────────────────────────────────────────────
+export function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+export function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+// ── Jet streams ───────────────────────────────────────────────────────────────
 /**
- * Draws bipolar matter jets from a neutron star.
- * Context must NOT have an active transform – the function handles its own save/restore.
+ * Draws animated bipolar matter jets that wiggle as they travel outward.
+ * The wiggle is a traveling sine wave — looks like ejected matter spiraling out.
+ *
+ * Context must NOT have an active outer transform.
+ * `time` = elapsed ms, drives the wave travel animation.
  */
 export function drawJets(
   ctx: CanvasRenderingContext2D,
@@ -12,48 +24,75 @@ export function drawJets(
   y: number,
   angle: number,
   jetLen: number,
+  time: number,
   alpha = 1,
 ): void {
-  // Bipolar jets – one each direction along the spin axis
-  for (const offset of [0, Math.PI]) {
-    const a = angle + offset;
+  const WAVE_LEN   = 88;            // spatial wavelength (px)
+  const WAVE_LEN2  = 44;            // second harmonic
+  const MAX_AMP    = jetLen * 0.08; // max perpendicular oscillation
+  const WAVE_VEL   = 240;           // apparent wave travel speed (px/s)
+  const phaseOff   = (time / 1000) * WAVE_VEL;
+
+  // Wiggly y-position at distance bx from star (in rotated local coordinates)
+  const wy = (bx: number): number => {
+    const envAmp = Math.pow(bx / jetLen, 1.8) * MAX_AMP;
+    const primary   = Math.sin((bx + phaseOff) / WAVE_LEN  * Math.PI * 2);
+    const secondary = Math.sin((bx + phaseOff) / WAVE_LEN2 * Math.PI * 2) * 0.28;
+    return (primary + secondary) * envAmp;
+  };
+
+  const SEGS  = 60; // path subdivisions per band
+  const BANDS = 12; // opacity bands (fewer stroke() calls than one per seg)
+
+  for (const dir of [0, Math.PI]) {
     ctx.save();
     ctx.translate(x, y);
-    ctx.rotate(a);
+    ctx.rotate(angle + dir);
 
-    // Soft cone glow (triangle shape, fills with gradient along x-axis)
-    const coneW = jetLen * 0.13;
+    // Soft glow cone (background fill behind the wiggly line)
+    const coneW = jetLen * 0.17;
     const cg = ctx.createLinearGradient(0, 0, jetLen, 0);
-    cg.addColorStop(0,   `rgba(160,225,255,${0.40 * alpha})`);
-    cg.addColorStop(0.25,`rgba(90,170,255,${0.18 * alpha})`);
-    cg.addColorStop(1,   `rgba(60,135,255,0)`);
+    cg.addColorStop(0,    `rgba(160,225,255,${0.40 * alpha})`);
+    cg.addColorStop(0.22, `rgba(90,175,255,${0.16 * alpha})`);
+    cg.addColorStop(1,    `rgba(60,135,255,0)`);
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(jetLen,  coneW);
+    ctx.lineTo(jetLen, coneW);
     ctx.lineTo(jetLen, -coneW);
     ctx.closePath();
     ctx.fillStyle = cg;
     ctx.fill();
 
-    // Bright core beam line
-    const bg = ctx.createLinearGradient(0, 0, jetLen, 0);
-    bg.addColorStop(0,    `rgba(255,255,255,${0.97 * alpha})`);
-    bg.addColorStop(0.10, `rgba(220,242,255,${0.85 * alpha})`);
-    bg.addColorStop(0.40, `rgba(145,215,255,${0.45 * alpha})`);
-    bg.addColorStop(1,    `rgba(80,160,255,0)`);
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(jetLen, 0);
-    ctx.strokeStyle = bg;
-    ctx.lineWidth = 1.8;
-    ctx.stroke();
+    // Wiggly core beam — batched into opacity bands for performance
+    for (let b = 0; b < BANDS; b++) {
+      const t0  = b       / BANDS;
+      const t1  = (b + 1) / BANDS;
+      const tm  = (t0 + t1) * 0.5;
+      const op  = (1 - tm) * alpha * 0.94;
+      const lw  = 2.1 - tm * 0.8;
+
+      const si = Math.floor(t0 * SEGS);
+      const ei = Math.floor(t1 * SEGS);
+
+      ctx.beginPath();
+      for (let s = si; s <= ei; s++) {
+        const bx = (s / SEGS) * jetLen;
+        const by = wy(bx);
+        if (s === si) ctx.moveTo(bx, by);
+        else          ctx.lineTo(bx, by);
+      }
+      ctx.strokeStyle = `rgba(255,255,255,${op})`;
+      ctx.lineWidth   = lw;
+      ctx.stroke();
+    }
 
     ctx.restore();
   }
 }
 
+// ── Star body ─────────────────────────────────────────────────────────────────
 /**
- * Draws a glowing neutron star with multi-layer halo, glow, and bright core.
+ * Draws a glowing neutron star: wide atmospheric halo → inner corona → white core.
  */
 export function drawStar(
   ctx: CanvasRenderingContext2D,
@@ -65,7 +104,6 @@ export function drawStar(
 ): void {
   const [cr, cg, cb] = color;
 
-  // Wide atmospheric halo
   const halo = ctx.createRadialGradient(x, y, 0, x, y, r * 22);
   halo.addColorStop(0,   `rgba(${cr},${cg},${cb},${0.14 * alpha})`);
   halo.addColorStop(0.3, `rgba(${cr},${cg},${cb},${0.05 * alpha})`);
@@ -75,9 +113,8 @@ export function drawStar(
   ctx.arc(x, y, r * 22, 0, Math.PI * 2);
   ctx.fill();
 
-  // Inner glow corona
   const corona = ctx.createRadialGradient(x, y, 0, x, y, r * 7);
-  corona.addColorStop(0,   `rgba(${cr},${cg},${cb},${0.60 * alpha})`);
+  corona.addColorStop(0,   `rgba(${cr},${cg},${cb},${0.62 * alpha})`);
   corona.addColorStop(0.45,`rgba(${cr},${cg},${cb},${0.22 * alpha})`);
   corona.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
   ctx.fillStyle = corona;
@@ -85,10 +122,9 @@ export function drawStar(
   ctx.arc(x, y, r * 7, 0, Math.PI * 2);
   ctx.fill();
 
-  // Bright white core
   const core = ctx.createRadialGradient(x, y, 0, x, y, r);
   core.addColorStop(0,   "rgba(255,255,255,1)");
-  core.addColorStop(0.6, `rgba(${cr},${cg},${cb},0.85)`);
+  core.addColorStop(0.6, `rgba(${cr},${cg},${cb},0.88)`);
   core.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`);
   ctx.fillStyle = core;
   ctx.beginPath();
@@ -96,8 +132,12 @@ export function drawStar(
   ctx.fill();
 }
 
+// ── Field lines ───────────────────────────────────────────────────────────────
 /**
- * Draws concentric magnetic field line rings centered on the binary system.
+ * Draws concentric magnetic field line rings as ellipses,
+ * giving the impression of a tilted orbital disk viewed from an angle.
+ *
+ * `yScale` controls disk tilt: 1.0 = circles (top-down), 0.35 ≈ 30° elevation view.
  */
 export function drawFieldLines(
   ctx: CanvasRenderingContext2D,
@@ -105,22 +145,18 @@ export function drawFieldLines(
   cy: number,
   maxR: number,
   alpha = 1,
+  yScale = 0.38,
 ): void {
   const N = 28;
   for (let i = 1; i <= N; i++) {
     const t = i / N;
     const r = maxR * t;
-    // Inner rings slightly more visible; outer rings fade out
-    const a = (0.072 - t * 0.055) * alpha;
+    const a = (0.072 - t * 0.056) * alpha;
     if (a < 0.003) continue;
     ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.ellipse(cx, cy, r, r * yScale, 0, 0, Math.PI * 2);
     ctx.strokeStyle = `rgba(120,200,255,${a})`;
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth   = 0.9;
     ctx.stroke();
   }
-}
-
-export function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }

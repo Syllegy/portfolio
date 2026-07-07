@@ -3,26 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 import { drawJets, drawStar, drawFieldLines } from "@/lib/neutronStarHelpers";
 
-// Must match IntroAnimation's T_HOLD + T_ZOOM + T_FADE
-const INTRO_MS = 350 + 3100 + 950;
+// Must exceed IntroAnimation's T_HOLD + T_ZOOM * FADE_AT + T_FADE
+const INTRO_MS = 200 + 3500 * 0.80 + 1100; // ≈ 4100ms
 
-// ── Orbital / physics constants ───────────────────────────────────────────────
-const SEP   = 70;
+const SEP   = 72;
 const M1    = 1.45;
 const M2    = 1.15;
 const r1    = SEP * M2 / (M1 + M2);
 const r2    = SEP * M1 / (M1 + M2);
 
-const PERIOD  = 5200;   // slightly different from intro for visual continuity illusion
+const PERIOD  = 5200;
 const SPIN1   = 2300;
 const SPIN2   = 3400;
-const JET_LEN = 400;    // px at 1x – jets sweep across the hero area
+const JET_LEN = 420;  // px — sweeps across the hero section
+const TILT    = 0.38; // y-axis compression for 3D disk tilt
 
 export function NeutronStars() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [show, setShow]   = useState(false);
+  const [show, setShow] = useState(false);
 
-  // Return visitors see it immediately; first-time visitors wait for the intro to finish
   useEffect(() => {
     if (sessionStorage.getItem("intro-done")) {
       setShow(true);
@@ -53,37 +52,40 @@ export function NeutronStars() {
     const draw = (now: number) => {
       const W  = canvas.width;
       const H  = canvas.height;
-
-      // Place the system in the right half of the hero so it doesn't crowd the text
+      // Slightly right-of-centre on wide screens; centred on mobile
       const cx = W > 768 ? W * 0.64 : W * 0.5;
       const cy = H * 0.50;
 
       ctx.clearRect(0, 0, W, H);
 
       const e     = now - start;
-      const orb   = (e / PERIOD)  * Math.PI * 2;
-      const spin1 = (e / SPIN1)   * Math.PI * 2;
-      const spin2 = (e / SPIN2)   * Math.PI * 2 + 1.1;
+      const orb   = (e / PERIOD) * Math.PI * 2;
+      const spin1 = (e / SPIN1)  * Math.PI * 2;
+      const spin2 = (e / SPIN2)  * Math.PI * 2 + 1.1;
 
-      // Slight y-flattening gives the sense of viewing the orbit at an angle
-      const PERSP = 0.30;
+      // Elliptical orbit (3D disk tilt)
       const s1x = cx + Math.cos(orb) * r1;
-      const s1y = cy + Math.sin(orb) * r1 * PERSP;
+      const s1y = cy + Math.sin(orb) * r1 * TILT;
       const s2x = cx - Math.cos(orb) * r2;
-      const s2y = cy - Math.sin(orb) * r2 * PERSP;
+      const s2y = cy - Math.sin(orb) * r2 * TILT;
 
-      // Field lines (dimmed vs intro – atmospheric, not dominant)
-      drawFieldLines(ctx, cx, cy, 500, 0.65);
+      // Depth-based size scaling
+      const sinOrb = Math.sin(orb);
+      const s1r    = 5.5 * (1 + sinOrb * 0.07);
+      const s2r    = 4.5 * (1 - sinOrb * 0.07);
 
-      // Jets (drawn behind stars)
-      drawJets(ctx, s2x, s2y, spin2, JET_LEN, 0.70);
-      drawJets(ctx, s1x, s1y, spin1, JET_LEN, 0.75);
+      // Field lines (tilted ellipse rings)
+      drawFieldLines(ctx, cx, cy, 500, 0.65, TILT);
 
-      // Stars (depth-sorted)
-      const s1Front = Math.sin(orb) > 0;
-      if (!s1Front) drawStar(ctx, s1x, s1y, 5.5, [225, 242, 255], 0.90);
-      drawStar(ctx,  s2x, s2y, 4.5, [140, 205, 255], 0.85);
-      if (s1Front)  drawStar(ctx, s1x, s1y, 5.5, [225, 242, 255], 0.90);
+      // Jets (wiggly, animated)
+      drawJets(ctx, s2x, s2y, spin2, JET_LEN, e, 0.70);
+      drawJets(ctx, s1x, s1y, spin1, JET_LEN, e, 0.75);
+
+      // Depth-sorted stars
+      const s1Front = sinOrb > 0;
+      if (!s1Front) drawStar(ctx, s1x, s1y, s1r, [225, 242, 255], 0.90);
+      drawStar(ctx,  s2x, s2y, s2r, [140, 205, 255], 0.85);
+      if (s1Front)  drawStar(ctx, s1x, s1y, s1r, [225, 242, 255], 0.90);
 
       rafId = requestAnimationFrame(draw);
     };
