@@ -22,7 +22,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-muted-foreground/30 text-sm font-medium">
+            <span className="text-foreground/60/30 text-sm font-medium">
               {project.title}
             </span>
           </div>

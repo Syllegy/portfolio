@@ -28,7 +28,7 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <Mail className="w-4 h-4 text-primary mt-0.5 shrink-0" />
               <div>
-                <dt className="text-xs text-muted-foreground mb-0.5">Email</dt>
+                <dt className="text-xs text-foreground/60 mb-0.5">Email</dt>
                 <dd>
                   <a
                     href={`mailto:${personal.email}`}
@@ -42,26 +42,26 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
               <div>
-                <dt className="text-xs text-muted-foreground mb-0.5">Location</dt>
+                <dt className="text-xs text-foreground/60 mb-0.5">Location</dt>
                 <dd className="text-sm font-medium">{personal.location}</dd>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
               <div>
-                <dt className="text-xs text-muted-foreground mb-0.5">Response Time</dt>
+                <dt className="text-xs text-foreground/60 mb-0.5">Response Time</dt>
                 <dd className="text-sm font-medium">Within 24 hours</dd>
               </div>
             </div>
           </dl>
 
           <div className="pt-4 border-t border-border">
-            <p className="text-xs text-muted-foreground mb-3">Also on</p>
+            <p className="text-xs text-foreground/60 mb-3">Also on</p>
             <a
               href={personal.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-foreground transition-colors"
             >
               <GitHubIcon className="w-4 h-4" />
               GitHub

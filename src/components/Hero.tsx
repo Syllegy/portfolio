@@ -55,7 +55,7 @@ export function Hero() {
 
           <motion.p
             variants={itemVariants}
-            className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl"
+            className="mt-6 text-lg text-foreground/60 leading-relaxed max-w-xl"
           >
             {personal.subheading}
           </motion.p>

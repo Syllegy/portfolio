@@ -53,7 +53,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
       {/* Filters */}
       <div className="space-y-4 mb-10">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/60" />
           <Input
             placeholder="Search projects or technologies…"
             value={search}
@@ -63,7 +63,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/60 hover:text-foreground"
               aria-label="Clear search"
             >
               <X className="w-4 h-4" />
@@ -80,7 +80,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
                 "px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
                 activeCategory === cat
                   ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:text-foreground"
+                  : "bg-muted text-foreground/60 hover:text-foreground"
               )}
             >
               {cat}
@@ -89,7 +89,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
         </div>
 
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-muted-foreground mr-1">Filter by tech:</span>
+          <span className="text-xs text-foreground/60 mr-1">Filter by tech:</span>
           {technologies.map((tech) => (
             <button
               key={tech}
@@ -98,7 +98,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
                 "px-2.5 py-1 rounded-full text-xs font-medium border transition-colors",
                 activeTech === tech
                   ? "border-primary text-primary bg-primary/10"
-                  : "border-border text-muted-foreground hover:text-foreground"
+                  : "border-border text-foreground/60 hover:text-foreground"
               )}
             >
               {tech}
@@ -107,7 +107,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
         </div>
 
         {hasFilters && (
-          <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1.5 text-muted-foreground">
+          <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1.5 text-foreground/60">
             <X className="w-3.5 h-3.5" />
             Clear filters
           </Button>
@@ -115,13 +115,13 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
       </div>
 
       {/* Results count */}
-      <p className="text-sm text-muted-foreground mb-6">
+      <p className="text-sm text-foreground/60 mb-6">
         Showing {filtered.length} of {projects.length} projects
       </p>
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 text-muted-foreground">
+        <div className="text-center py-20 text-foreground/60">
           <p className="text-lg font-medium">No projects found</p>
           <p className="text-sm mt-2">Try adjusting your filters</p>
           <Button variant="ghost" className="mt-4" onClick={clearFilters}>

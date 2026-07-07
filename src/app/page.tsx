@@ -76,7 +76,7 @@ export default function HomePage() {
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                 Have a project in mind?
               </h2>
-              <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
+              <p className="text-foreground/60 text-lg mb-8 max-w-lg mx-auto">
                 I&apos;m available for website development, repairs, technical SEO, and ongoing maintenance. Let&apos;s talk about what you need.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3">

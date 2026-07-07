@@ -57,10 +57,10 @@ export function SkillsGrid({ preview = false }: SkillsGridProps) {
                     <Icon className="w-4 h-4 text-primary" />
                   </div>
                 )}
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                <p className="text-xs font-semibold uppercase tracking-widest text-foreground/60">
                   {category.label}
                 </p>
-                <span className="ml-auto text-xs font-mono text-muted-foreground/50">
+                <span className="ml-auto text-xs font-mono text-foreground/60/50">
                   {category.skills.length}
                 </span>
               </div>

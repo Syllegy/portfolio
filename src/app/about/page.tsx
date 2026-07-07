@@ -27,7 +27,7 @@ export default function AboutPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24">
         <AnimateIn className="lg:col-span-2 space-y-5" direction="right">
           {personal.bio.split("\n\n").map((para, idx) => (
-            <p key={idx} className="text-muted-foreground leading-relaxed">
+            <p key={idx} className="text-foreground/60 leading-relaxed">
               {para}
             </p>
           ))}
@@ -55,14 +55,14 @@ export default function AboutPage() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                 <div>
-                  <dt className="text-muted-foreground text-xs uppercase tracking-wide mb-0.5">Location</dt>
+                  <dt className="text-foreground/60 text-xs uppercase tracking-wide mb-0.5">Location</dt>
                   <dd className="font-medium">{personal.location}</dd>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Mail className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                 <div>
-                  <dt className="text-muted-foreground text-xs uppercase tracking-wide mb-0.5">Email</dt>
+                  <dt className="text-foreground/60 text-xs uppercase tracking-wide mb-0.5">Email</dt>
                   <dd>
                     <a
                       href={`mailto:${personal.email}`}
@@ -77,7 +77,7 @@ export default function AboutPage() {
 
             <Separator />
             <div>
-              <h4 className="text-xs uppercase tracking-wide text-muted-foreground mb-3">Focus Areas</h4>
+              <h4 className="text-xs uppercase tracking-wide text-foreground/60 mb-3">Focus Areas</h4>
               <div className="flex flex-wrap gap-2">
                 {[
                   "Web Development",

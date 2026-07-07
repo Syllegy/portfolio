@@ -35,7 +35,6 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20">
-      {/* Back */}
       <AnimateIn className="mb-8">
         <Button asChild variant="ghost" size="sm" className="gap-2 -ml-2">
           <Link href="/projects">
@@ -45,27 +44,26 @@ export default async function ProjectPage({ params }: Props) {
         </Button>
       </AnimateIn>
 
-      {/* Header */}
       <AnimateIn className="mb-10">
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{project.category}</Badge>
             {project.ongoing && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-500 bg-green-500/10 border border-green-500/20 px-2.5 py-1 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-400 bg-green-500/10 px-2.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                 Ongoing
               </span>
             )}
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">{project.title}</h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">{project.description}</p>
+          <p className="text-xl text-foreground/75 leading-relaxed">{project.description}</p>
 
           <div className="flex flex-wrap gap-2">
             {project.technologies.map((tech) => (
-              <Badge key={tech} variant="outline" className="text-xs font-normal">
+              <span key={tech} className="text-xs px-2.5 py-1 bg-muted rounded text-foreground/60 font-normal">
                 {tech}
-              </Badge>
+              </span>
             ))}
           </div>
 
@@ -82,14 +80,13 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </AnimateIn>
 
-      {/* Screenshot */}
       {project.image && (
         <AnimateIn className="mb-12">
           <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block rounded-xl overflow-hidden border border-border group"
+            className="block rounded-sm overflow-hidden group"
             aria-label={`Visit ${project.title}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -98,7 +95,7 @@ export default async function ProjectPage({ params }: Props) {
               alt={`${project.title} homepage screenshot`}
               className="w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
             />
-            <div className="flex items-center justify-between px-4 py-2.5 bg-muted border-t border-border text-xs text-muted-foreground">
+            <div className="flex items-center justify-between px-4 py-2.5 bg-muted text-xs text-foreground/60">
               <span className="font-mono truncate">{project.liveUrl}</span>
               <ExternalLink className="w-3.5 h-3.5 shrink-0 ml-2" />
             </div>
@@ -108,26 +105,25 @@ export default async function ProjectPage({ params }: Props) {
 
       <Separator className="mb-12" />
 
-      {/* Case study sections */}
       <div className="space-y-14">
         <AnimateIn>
           <section>
             <h2 className="text-2xl font-bold mb-4">Overview</h2>
-            <p className="text-muted-foreground leading-relaxed">{project.longDescription}</p>
+            <p className="text-foreground/75 leading-relaxed">{project.longDescription}</p>
           </section>
         </AnimateIn>
 
         <AnimateIn delay={0.05}>
           <section>
             <h2 className="text-2xl font-bold mb-4">The Challenge</h2>
-            <p className="text-muted-foreground leading-relaxed">{project.problem}</p>
+            <p className="text-foreground/75 leading-relaxed">{project.problem}</p>
           </section>
         </AnimateIn>
 
         <AnimateIn delay={0.05}>
           <section>
             <h2 className="text-2xl font-bold mb-4">My Approach</h2>
-            <p className="text-muted-foreground leading-relaxed">{project.solution}</p>
+            <p className="text-foreground/75 leading-relaxed">{project.solution}</p>
           </section>
         </AnimateIn>
 
@@ -140,7 +136,7 @@ export default async function ProjectPage({ params }: Props) {
                   <span className="w-5 h-5 rounded-full bg-primary/10 text-primary text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{item}</p>
+                  <p className="text-foreground/75 leading-relaxed text-sm">{item}</p>
                 </li>
               ))}
             </ul>
@@ -153,8 +149,8 @@ export default async function ProjectPage({ params }: Props) {
             <ul className="space-y-3">
               {project.challenges.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <AlertCircle className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
-                  <p className="text-muted-foreground leading-relaxed text-sm">{item}</p>
+                  <AlertCircle className="w-4 h-4 text-foreground/40 shrink-0 mt-0.5" />
+                  <p className="text-foreground/75 leading-relaxed text-sm">{item}</p>
                 </li>
               ))}
             </ul>
@@ -168,10 +164,10 @@ export default async function ProjectPage({ params }: Props) {
               {project.results.map((result, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 bg-card border border-border rounded-xl p-4"
+                  className="flex items-start gap-3 bg-card rounded-sm p-4"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                  <p className="text-sm leading-relaxed">{result}</p>
+                  <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                  <p className="text-sm text-foreground/75 leading-relaxed">{result}</p>
                 </div>
               ))}
             </div>
@@ -185,7 +181,7 @@ export default async function ProjectPage({ params }: Props) {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h3 className="font-bold text-lg">Interested in working together?</h3>
-            <p className="text-muted-foreground text-sm mt-1">
+            <p className="text-foreground/60 text-sm mt-1">
               I&apos;m available for new freelance projects.
             </p>
           </div>

@@ -26,7 +26,7 @@ export default function ProjectsPage() {
         <AnimateIn delay={0.1}>
           <div className="border border-dashed border-border rounded-2xl p-16 text-center">
             <p className="text-2xl font-semibold mb-3">Coming Soon</p>
-            <p className="text-muted-foreground max-w-md mx-auto mb-8">
+            <p className="text-foreground/60 max-w-md mx-auto mb-8">
               Case studies are being prepared. In the meantime, feel free to reach out directly to discuss my work.
             </p>
             <Button asChild className="gap-2">

@@ -52,7 +52,7 @@ export function ContactForm() {
           <CheckCircle2 className="w-8 h-8 text-green-500" />
         </div>
         <h3 className="text-xl font-bold">Message sent!</h3>
-        <p className="text-muted-foreground">
+        <p className="text-foreground/60">
           Thanks for reaching out. I&apos;ll get back to you within 24 hours.
         </p>
         <Button variant="outline" onClick={() => setStatus("idle")}>

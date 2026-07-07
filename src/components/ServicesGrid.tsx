@@ -24,7 +24,7 @@ export function ServicesGrid() {
                 {Icon && <Icon className="w-5 h-5 text-primary" />}
               </div>
               <h3 className="font-semibold text-base mb-2">{service.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-foreground/60 leading-relaxed">
                 {service.description}
               </p>
             </div>

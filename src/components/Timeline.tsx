@@ -50,11 +50,11 @@ export function Timeline({ preview = false }: TimelineProps) {
                         </p>
                       )}
                     </div>
-                    <span className="text-xs font-mono text-muted-foreground bg-muted px-2.5 py-1 rounded-full whitespace-nowrap shrink-0">
+                    <span className="text-xs font-mono text-foreground/60 bg-muted px-2.5 py-1 rounded-full whitespace-nowrap shrink-0">
                       {item.year}
                     </span>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-foreground/60 leading-relaxed">
                     {item.description}
                   </p>
                   {item.tags && item.tags.length > 0 && (
@@ -62,7 +62,7 @@ export function Timeline({ preview = false }: TimelineProps) {
                       {item.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-0.5 bg-muted rounded-md border border-border/60 text-muted-foreground"
+                          className="text-xs px-2 py-0.5 bg-muted rounded-md border border-border/60 text-foreground/60"
                         >
                           {tag}
                         </span>
