@@ -9,7 +9,11 @@ export function SkillsPlanet() {
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto touch-none">
       <Canvas
-        camera={{ fov: 45, position: [0, 0, 9] }}
+        // Distance is a bit more than the tightest fit around the globe
+        // itself — the orbiting satellites need extra frustum headroom so
+        // their outward-facing solar panels don't get clipped at the edge
+        // of the view as they swing around (see Satellite.tsx).
+        camera={{ fov: 45, position: [0, 0, 10.2] }}
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 1.75]}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}

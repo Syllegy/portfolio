@@ -16,10 +16,17 @@ interface OrbitConfig {
   accentColor: string;
 }
 
+// Orbit radii are kept in a fairly narrow band: they must clear the globe's
+// dust shell (radius ~3.06) on the inside, but a satellite's outward-facing
+// solar panel constantly sits farther from the orbit centre than the body
+// itself, so the *outer* edge of that panel is what actually needs to stay
+// inside the camera frustum (see the frustum-margin note on the camera in
+// SkillsPlanet.tsx). Keep radius + panelReach * scale comfortably under that
+// limit for every entry here.
 const ORBITS: OrbitConfig[] = [
-  { radius: 3.1, speed: 0.26, tiltX: -0.2, tiltZ: 0.1, phase: 0, scale: 0.58, accentColor: "#ff5b5b" },
-  { radius: 3.4, speed: -0.15, tiltX: 0.68, tiltZ: -0.32, phase: 2.35, scale: 0.5, accentColor: "#5be0ff" },
-  { radius: 3.6, speed: 0.09, tiltX: -1.05, tiltZ: 0.48, phase: 4.55, scale: 0.62, accentColor: "#ffd45b" },
+  { radius: 3.1, speed: 0.26, tiltX: -0.2, tiltZ: 0.1, phase: 0, scale: 0.42, accentColor: "#ff5b5b" },
+  { radius: 3.2, speed: -0.15, tiltX: 0.68, tiltZ: -0.32, phase: 2.35, scale: 0.38, accentColor: "#5be0ff" },
+  { radius: 3.35, speed: 0.09, tiltX: -1.05, tiltZ: 0.48, phase: 4.55, scale: 0.46, accentColor: "#ffd45b" },
 ];
 
 function usePanelTexture(): THREE.Texture {
@@ -80,21 +87,22 @@ function SatelliteModel({ scale, accentColor }: SatelliteModelProps) {
         <meshStandardMaterial color="#d8dee8" metalness={0.55} roughness={0.35} />
       </mesh>
 
-      {/* Solar panel wings */}
-      <mesh position={[0.62, 0, 0]}>
-        <boxGeometry args={[0.72, 0.02, 0.26]} />
+      {/* Solar panel wings — kept short so the outward wing doesn't push the
+          satellite's effective radius too close to the camera frustum edge. */}
+      <mesh position={[0.46, 0, 0]}>
+        <boxGeometry args={[0.46, 0.02, 0.24]} />
         <meshStandardMaterial map={panelTex} metalness={0.25} roughness={0.55} />
       </mesh>
-      <mesh position={[-0.62, 0, 0]}>
-        <boxGeometry args={[0.72, 0.02, 0.26]} />
+      <mesh position={[-0.46, 0, 0]}>
+        <boxGeometry args={[0.46, 0.02, 0.24]} />
         <meshStandardMaterial map={panelTex} metalness={0.25} roughness={0.55} />
       </mesh>
-      <mesh position={[0.24, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.012, 0.012, 0.16, 8]} />
+      <mesh position={[0.2, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.012, 0.012, 0.1, 8]} />
         <meshStandardMaterial color="#8891a0" metalness={0.6} roughness={0.4} />
       </mesh>
-      <mesh position={[-0.24, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.012, 0.012, 0.16, 8]} />
+      <mesh position={[-0.2, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.012, 0.012, 0.1, 8]} />
         <meshStandardMaterial color="#8891a0" metalness={0.6} roughness={0.4} />
       </mesh>
 
