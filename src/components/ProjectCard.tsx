@@ -14,7 +14,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {/* Image */}
       <Link
         href={`/projects/${project.slug}`}
-        className="relative h-52 overflow-hidden bg-muted shrink-0 block"
+        // Matches the ~1.9:1 aspect ratio of the actual screenshots (rather than a
+        // fixed pixel height), so object-cover doesn't have to crop more off the
+        // sides than the source images than intended at different card widths.
+        className="relative aspect-[1024/535] overflow-hidden bg-muted shrink-0 block"
         aria-label={`View ${project.title} case study`}
       >
         {project.image ? (
