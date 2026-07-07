@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import type { Project } from "@/data/projects";
 
 interface ProjectCardProps {
@@ -11,15 +10,15 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="group flex flex-col h-full overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:border-border/80">
-      {/* Image / preview area */}
-      <div className="relative aspect-video overflow-hidden bg-muted border-b border-border">
+    <div className="group flex flex-col h-full overflow-hidden bg-card rounded-sm transition-all duration-200 hover:-translate-y-1">
+      {/* Image */}
+      <div className="relative h-52 overflow-hidden bg-muted shrink-0">
         {project.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={project.image}
             alt={`${project.title} screenshot`}
-            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -29,15 +28,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         )}
         {project.ongoing && (
-          <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-semibold bg-background/90 backdrop-blur-sm text-green-500 border border-green-500/30 px-2.5 py-1 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-xs font-semibold bg-background/80 backdrop-blur-sm text-green-400 px-2.5 py-1 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             Ongoing
           </span>
         )}
       </div>
 
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between gap-3">
+      {/* Content */}
+      <div className="flex flex-col flex-1 p-5">
+        <div className="flex items-start justify-between gap-3 mb-2">
           <Link href={`/projects/${project.slug}`}>
             <h3 className="font-bold text-base leading-snug group-hover:text-primary transition-colors">
               {project.title}
@@ -47,41 +47,40 @@ export function ProjectCard({ project }: ProjectCardProps) {
             {project.category}
           </Badge>
         </div>
-      </CardHeader>
 
-      <CardContent className="flex-1 pt-0">
-        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
+        <p className="text-sm text-foreground/80 leading-relaxed line-clamp-3 flex-1">
           {project.description}
         </p>
+
         <div className="mt-4 flex flex-wrap gap-1.5">
           {project.technologies.slice(0, 5).map((tech) => (
-            <Badge key={tech} variant="outline" className="text-xs font-normal">
+            <span key={tech} className="text-xs px-2 py-0.5 bg-muted rounded text-muted-foreground">
               {tech}
-            </Badge>
+            </span>
           ))}
           {project.technologies.length > 5 && (
-            <Badge variant="outline" className="text-xs font-normal text-muted-foreground">
+            <span className="text-xs px-2 py-0.5 bg-muted rounded text-muted-foreground">
               +{project.technologies.length - 5}
-            </Badge>
+            </span>
           )}
         </div>
-      </CardContent>
 
-      <CardFooter className="pt-4 flex items-center gap-2">
-        <Button asChild size="sm" className="flex-1 gap-1.5">
-          <Link href={`/projects/${project.slug}`}>
-            Case Study
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </Button>
-        {project.liveUrl && (
-          <Button asChild size="sm" variant="outline" className="w-9 h-9 p-0">
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="View live site">
-              <ExternalLink className="w-4 h-4" />
-            </a>
+        <div className="mt-5 flex items-center gap-2">
+          <Button asChild size="sm" className="flex-1 gap-1.5">
+            <Link href={`/projects/${project.slug}`}>
+              Case Study
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </Button>
-        )}
-      </CardFooter>
-    </Card>
+          {project.liveUrl && (
+            <Button asChild size="sm" variant="ghost" className="w-9 h-9 p-0">
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label="View live site">
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

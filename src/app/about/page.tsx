@@ -48,7 +48,7 @@ export default function AboutPage() {
         </AnimateIn>
 
         <AnimateIn direction="left" delay={0.15}>
-          <div className="bg-card border border-border rounded-2xl p-6 space-y-5">
+          <div className="bg-card rounded-sm p-6 space-y-5">
             <h3 className="font-semibold text-base">Quick Info</h3>
             <Separator />
             <dl className="space-y-4 text-sm">

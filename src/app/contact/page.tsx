@@ -70,7 +70,7 @@ export default function ContactPage() {
         </AnimateIn>
 
         <AnimateIn className="lg:col-span-3" delay={0.15}>
-          <div className="bg-card border border-border rounded-sm p-6 sm:p-8">
+          <div className="bg-card rounded-sm p-6 sm:p-8">
             <h3 className="font-semibold text-base mb-6">Send a Message</h3>
             <ContactForm />
           </div>

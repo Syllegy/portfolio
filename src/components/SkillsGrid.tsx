@@ -27,7 +27,7 @@ function SkillTag({ name, index }: SkillTagProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.22, delay: index * 0.04 }}
       whileHover={{ y: -3, scale: 1.04 }}
-      className="flex items-center justify-center px-4 py-3 text-sm font-medium cursor-default select-none bg-muted/60 border border-border/60 rounded-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150"
+      className="flex items-center justify-center px-4 py-3 text-sm font-medium cursor-default select-none bg-muted/70 rounded-sm text-foreground/70 hover:text-foreground hover:bg-muted transition-colors duration-150"
     >
       {name}
     </motion.div>
@@ -49,9 +49,9 @@ export function SkillsGrid({ preview = false }: SkillsGridProps) {
         const Icon = categoryIcons[category.id];
         return (
           <AnimateIn key={category.id} delay={idx * 0.08} direction="up">
-            <div className="bg-card border border-border rounded-sm h-full overflow-hidden">
+            <div className="bg-card rounded-sm h-full overflow-hidden">
               {/* Card header with icon */}
-              <div className="flex items-center gap-3 px-6 pt-5 pb-4 border-b border-border">
+              <div className="flex items-center gap-3 px-6 pt-5 pb-4 border-b border-border/40">
                 {Icon && (
                   <div className="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center shrink-0">
                     <Icon className="w-4 h-4 text-primary" />

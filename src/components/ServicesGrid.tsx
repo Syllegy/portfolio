@@ -19,7 +19,7 @@ export function ServicesGrid() {
         const Icon = iconMap[service.icon];
         return (
           <AnimateIn key={service.title} delay={idx * 0.07} direction="up">
-            <div className="bg-card border border-border rounded-xl p-6 h-full group hover:border-primary/30 transition-colors duration-200">
+            <div className="bg-card rounded-sm p-6 h-full transition-colors duration-200">
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 {Icon && <Icon className="w-5 h-5 text-primary" />}
               </div>

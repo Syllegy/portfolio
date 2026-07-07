@@ -40,7 +40,7 @@ export function Timeline({ preview = false }: TimelineProps) {
                   <Icon className="w-5 h-5" />
                 </div>
 
-                <div className="bg-card border border-border rounded-xl p-5">
+                <div className="bg-card rounded-sm p-5">
                   <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                     <div>
                       <h3 className="font-semibold text-base">{item.title}</h3>
