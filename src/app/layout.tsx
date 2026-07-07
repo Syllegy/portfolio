@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { GlobalBackground } from "@/components/GlobalBackground";
-import { IntroAnimation } from "@/components/IntroAnimation";
 import { personal } from "@/data/personal";
 
 const geistSans = Geist({
@@ -91,7 +90,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <IntroAnimation />
           <GlobalBackground />
           <Navbar />
           <main className="flex-1 pt-16">{children}</main>
