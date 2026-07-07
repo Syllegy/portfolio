@@ -12,7 +12,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="group flex flex-col h-full overflow-hidden bg-card rounded-sm transition-all duration-200 hover:-translate-y-1">
       {/* Image */}
-      <div className="relative h-52 overflow-hidden bg-muted shrink-0">
+      <Link
+        href={`/projects/${project.slug}`}
+        className="relative h-52 overflow-hidden bg-muted shrink-0 block"
+        aria-label={`View ${project.title} case study`}
+      >
         {project.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -33,7 +37,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             Ongoing
           </span>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-5">

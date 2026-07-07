@@ -168,6 +168,57 @@ export const projects: Project[] = [
       "Continued performance optimization across the storefront",
     ],
   },
+  {
+    slug: "find-luxury-rehabs",
+    title: "Find Luxury Rehabs",
+    description:
+      "Ongoing frontend and backend development, technical SEO, and performance optimization for a luxury addiction recovery treatment directory.",
+    longDescription:
+      "Find Luxury Rehabs is an online directory that connects individuals and families with luxury residential treatment centers specializing in addiction recovery and mental health care. As part of the development team, I contribute to the ongoing maintenance, optimization, and enhancement of the platform through frontend development, backend development, technical SEO, and performance improvements.",
+    technologies: [
+      "Next.js",
+      "React",
+      "WordPress",
+      "SASS",
+      "SCSS",
+      "GSAP",
+      "Swiper.js",
+      "Google Analytics",
+      "Google Search Console",
+      "SEMRush",
+    ],
+    liveUrl: "https://findluxuryrehabs.com/",
+    featured: true,
+    ongoing: true,
+    category: "Next.js",
+    problem:
+      "The goal was not to rebuild the platform but to continuously improve an existing production website, identifying opportunities for refinement while maintaining stability across a growing codebase, spanning technical SEO, page performance, responsive consistency, and new feature development that had to align with the existing design system.",
+    solution:
+      "Working alongside the development team, I developed reusable components to simplify future development, implemented technical SEO improvements throughout the site, optimized frontend assets and rendering performance to improve Core Web Vitals, refined responsive layouts for consistency across devices, and improved accessibility through better semantic HTML.",
+    contributions: [
+      "Developed reusable React components, including functionality for the quiz experience",
+      "Built responsive layouts consistent across desktop, tablet, and mobile devices",
+      "Implemented technical SEO improvements across key pages",
+      "Optimized Core Web Vitals and overall website performance",
+      "Improved accessibility through semantic markup and frontend refinements",
+      "Assisted with ongoing maintenance, feature development, and platform improvements",
+    ],
+    challenges: [
+      "Improving technical SEO implementation",
+      "Enhancing page performance",
+      "Maintaining consistency across responsive layouts",
+      "Introducing new features without disrupting existing functionality",
+      "Ensuring new components aligned with the existing design system",
+    ],
+    results: [
+      "Stronger technical SEO implementation",
+      "Improved Core Web Vitals and page performance",
+      "Enhanced accessibility and usability",
+      "Faster, more responsive page experiences",
+      "Continued rollout of new features and platform enhancements",
+      "Better maintainability through reusable component development",
+    ],
+  },
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.featured);
