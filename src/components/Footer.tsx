@@ -15,13 +15,13 @@ export function Footer() {
               <Code2 className="w-5 h-5 text-primary" />
               {personal.name}
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-foreground/60 leading-relaxed">
               {personal.tagline}
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-3 text-xs uppercase tracking-wider text-muted-foreground">
+            <h3 className="font-semibold mb-3 text-xs uppercase tracking-wider text-foreground/50">
               Navigation
             </h3>
             <ul className="space-y-2 text-sm">
@@ -35,7 +35,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-foreground/70 hover:text-foreground transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -45,7 +45,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-3 text-xs uppercase tracking-wider text-muted-foreground">
+            <h3 className="font-semibold mb-3 text-xs uppercase tracking-wider text-foreground/50">
               Connect
             </h3>
             <div className="flex gap-4">
@@ -54,14 +54,14 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground transition-colors"
               >
                 <GitHubIcon className="w-5 h-5" />
               </a>
               <a
                 href={`mailto:${personal.email}`}
                 aria-label="Email"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-foreground transition-colors"
               >
                 <Mail className="w-5 h-5" />
               </a>
@@ -69,7 +69,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-foreground/50">
           <p>© {year} {personal.name}. All rights reserved.</p>
           <p>Built with Next.js & Tailwind CSS</p>
         </div>

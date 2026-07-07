@@ -48,18 +48,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </Badge>
         </div>
 
-        <p className="text-sm text-foreground/80 leading-relaxed line-clamp-3 flex-1">
+        <p className="text-sm text-foreground/75 leading-relaxed line-clamp-3 flex-1">
           {project.description}
         </p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {project.technologies.slice(0, 5).map((tech) => (
-            <span key={tech} className="text-xs px-2 py-0.5 bg-muted rounded text-muted-foreground">
+            <span key={tech} className="text-xs px-2 py-0.5 bg-muted rounded text-foreground/60">
               {tech}
             </span>
           ))}
           {project.technologies.length > 5 && (
-            <span className="text-xs px-2 py-0.5 bg-muted rounded text-muted-foreground">
+            <span className="text-xs px-2 py-0.5 bg-muted rounded text-foreground/60">
               +{project.technologies.length - 5}
             </span>
           )}

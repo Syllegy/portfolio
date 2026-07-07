@@ -61,7 +61,7 @@ export function Navbar() {
                   "px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   pathname === link.href
                     ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-foreground/70 hover:text-foreground"
                 )}
               >
                 {link.label}
@@ -102,7 +102,7 @@ export function Navbar() {
                     "block px-3 py-2 rounded-md text-sm font-medium transition-colors",
                     pathname === link.href
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      : "text-foreground/70 hover:text-foreground hover:bg-muted"
                   )}
                 >
                   {link.label}
