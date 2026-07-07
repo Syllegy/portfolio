@@ -39,21 +39,22 @@ export function NeutronStars() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Use window dimensions directly — canvas.offsetWidth can be 0 before CSS
+    // layout completes, leaving the canvas at the browser default 300×150 px.
+    // When CSS then scales that tiny canvas to fill the section, everything
+    // appears enormous (huge rings, no visible stars). window.innerWidth is
+    // always available and matches a full-screen hero section.
     const resize = () => {
-      const w = canvas.offsetWidth;
-      const h = canvas.offsetHeight;
-      if (w > 0 && h > 0) {
-        canvas.width  = w;
-        canvas.height = h;
-      }
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
     resize();
+    window.addEventListener("resize", resize);
 
-    // Fade in via JS so it's reliable regardless of CSS animation support
+    // Fade in via JS
     canvas.style.opacity    = "0";
     canvas.style.transition = "opacity 1.4s ease-out";
-    requestAnimationFrame(() => { canvas.style.opacity = "1"; });
-    window.addEventListener("resize", resize);
+    setTimeout(() => { canvas.style.opacity = "1"; }, 60);
 
     const start = performance.now();
     let rafId   = 0;
@@ -61,6 +62,7 @@ export function NeutronStars() {
     const draw = (now: number) => {
       const W  = canvas.width;
       const H  = canvas.height;
+      if (W < 10 || H < 10) { rafId = requestAnimationFrame(draw); return; }
       const cx = W > 768 ? W * 0.64 : W * 0.5;
       const cy = H * 0.50;
 

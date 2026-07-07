@@ -157,7 +157,7 @@ export function drawFieldLines(
   alpha = 1,
   yScale = 0.28,
 ): void {
-  const N = 24;
+  const N = 16;
   for (let i = 1; i <= N; i++) {
     const t = i / N;
     const r = maxR * t;
