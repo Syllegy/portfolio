@@ -1,22 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+  drawJets,
+  drawStar,
+  drawFieldLines,
+  easeInOutCubic,
+} from "@/lib/neutronStarHelpers";
 
-interface WarpStar {
-  angle: number;
-  dist: number;
-  speed: number;
-  thickness: number;
-}
+const BG = "rgb(6, 8, 22)";
 
-const BG = "rgb(8, 7, 18)";
+// ── Timing ────────────────────────────────────────────────────────────────────
+const T_HOLD = 350;    // hold at max zoom so the close-up registers
+const T_ZOOM = 3100;   // zoom-out from close-up to 1x
+const T_FADE = 950;    // CSS opacity fade, revealing the site
 
-// Timing (ms)
-const T_WARP    = 1600;
-const T_EXPLODE = 340;
-const T_FLASH   = 160;
-const T_FADE    = 850;
-const T_TOTAL   = T_WARP + T_EXPLODE + T_FLASH + T_FADE;
+// ── Orbital / physics constants ───────────────────────────────────────────────
+const SEP   = 70;       // logical px separation between stars
+const M1    = 1.45;     // heavier star (white)
+const M2    = 1.15;     // lighter star (cyan)
+const r1    = SEP * M2 / (M1 + M2); // ~31 px, heavier → closer to CoM
+const r2    = SEP * M1 / (M1 + M2); // ~39 px
+
+const PERIOD   = 4800;   // orbital period ms
+const SPIN1    = 2300;   // star 1 spin period ms
+const SPIN2    = 3400;   // star 2 spin period ms (different for visual variety)
+const JET_LEN  = 380;    // logical px – at 3.5x zoom these go well off-screen
 
 export function IntroAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,120 +42,89 @@ export function IntroAnimation() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const W = (canvas.width = window.innerWidth);
-    const H = (canvas.height = window.innerHeight);
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const W  = canvas.width;
+    const H  = canvas.height;
     const cx = W / 2;
     const cy = H / 2;
 
-    // Fewer, more separated stars
-    const NUM = 160;
-    const stars: WarpStar[] = Array.from({ length: NUM }, () => ({
-      angle: Math.random() * Math.PI * 2,
-      // Spread initial positions out more so they're visually separated
-      dist: 20 + Math.random() * 60,
-      speed: 0.8 + Math.random() * 1.8,
-      thickness: 0.5 + Math.random() * 0.7,
-    }));
-
     const start = performance.now();
-    let rafId = 0;
-    let fadingOut = false;
+    let rafId   = 0;
+    let fading  = false;
 
     const draw = (now: number) => {
       const e = now - start;
 
-      const warpProgress = Math.min(e / T_WARP, 1);
-      const inExplode    = e > T_WARP && e < T_WARP + T_EXPLODE;
-      const inFlash      = e > T_WARP + T_EXPLODE && e < T_WARP + T_EXPLODE + T_FLASH;
-      const inFade       = e > T_WARP + T_EXPLODE + T_FLASH;
-
-      // Hand off to CSS once fade starts — cleaner crossfade into the site
-      if (inFade && !fadingOut) {
-        fadingOut = true;
+      // Hand off to CSS once we enter the fade phase
+      if (e > T_HOLD + T_ZOOM && !fading) {
+        fading = true;
         canvas.style.transition = `opacity ${T_FADE}ms ease-in-out`;
-        canvas.style.opacity = "0";
+        canvas.style.opacity    = "0";
         cancelAnimationFrame(rafId);
         setTimeout(() => {
           sessionStorage.setItem("intro-done", "1");
           setVisible(false);
-        }, T_FADE + 50);
+        }, T_FADE + 80);
         return;
       }
 
-      // Speed curve: gentle cubic ease-in
-      // Peak ~8x during warp, blast to 22x on explode
-      const speedMult = inExplode
-        ? 22
-        : 1 + Math.pow(warpProgress, 2.5) * 7;
+      // Zoom factor: 3.5 → 1 using cubic ease-in-out
+      const zoomT    = Math.min(Math.max(e - T_HOLD, 0) / T_ZOOM, 1);
+      const zoom     = 3.5 - easeInOutCubic(zoomT) * 2.5; // 3.5 → 1.0
 
-      // Higher alpha = shorter streaks (stars stay as points longer)
-      const trailAlpha = inExplode ? 0.08 : 0.3;
-      ctx.fillStyle = `rgba(8,7,18,${trailAlpha})`;
+      // Orbital + spin angles
+      const orb   = (e / PERIOD) * Math.PI * 2;
+      const spin1 = (e / SPIN1)  * Math.PI * 2;
+      const spin2 = (e / SPIN2)  * Math.PI * 2 + 1.1; // offset so beams start at different angles
+
+      // Star positions (no y-perspective in intro – full circular orbit for dramatic look)
+      const s1x = cx + Math.cos(orb) * r1;
+      const s1y = cy + Math.sin(orb) * r1;
+      const s2x = cx - Math.cos(orb) * r2;
+      const s2y = cy - Math.sin(orb) * r2;
+
+      // ── Draw ────────────────────────────────────────────────────────────
+      ctx.fillStyle = BG;
       ctx.fillRect(0, 0, W, H);
 
-      // Center glow — ice blue, not purple
-      if (!inFade) {
-        const glowR = 50 + warpProgress * 35;
-        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
-        g.addColorStop(0,   `rgba(180,220,255,${0.4 + warpProgress * 0.25})`);
-        g.addColorStop(0.5, `rgba(80,150,220,0.12)`);
-        g.addColorStop(1,   "transparent");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(cx, cy, glowR, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // Background nebula — subtle blue cloud centred on the system
+      const neb = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.55);
+      neb.addColorStop(0,   "rgba(18,45,120,0.28)");
+      neb.addColorStop(0.5, "rgba(8,22,70,0.14)");
+      neb.addColorStop(1,   "transparent");
+      ctx.fillStyle = neb;
+      ctx.fillRect(0, 0, W, H);
 
-      // Stars
-      for (const s of stars) {
-        const prev = s.dist;
-        s.dist += s.speed * speedMult;
+      // Apply zoom transform, anchored to canvas centre
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(zoom, zoom);
+      ctx.translate(-cx, -cy);
 
-        if (s.dist > Math.max(W, H) * 0.8) {
-          s.dist = 20 + Math.random() * 40;
-          s.angle = Math.random() * Math.PI * 2;
-        }
+      // Field lines centred on the orbital centre of mass
+      drawFieldLines(ctx, cx, cy, 480);
 
-        const x1 = cx + Math.cos(s.angle) * prev;
-        const y1 = cy + Math.sin(s.angle) * prev;
-        const x2 = cx + Math.cos(s.angle) * s.dist;
-        const y2 = cy + Math.sin(s.angle) * s.dist;
+      // Jets rendered behind stars so glows layer correctly
+      drawJets(ctx, s2x, s2y, spin2, JET_LEN);
+      drawJets(ctx, s1x, s1y, spin1, JET_LEN);
 
-        // Ice blue / near-white tint
-        const bright = Math.min(1, s.dist / 100);
-        const r = 210 + Math.floor(Math.random() * 10);
-        const g2 = 225 + Math.floor(Math.random() * 10);
+      // Stars (depth-sort: star behind gets drawn first)
+      const s1Front = Math.sin(orb) > 0;
+      if (!s1Front) drawStar(ctx, s1x, s1y, 6, [225, 242, 255]);
+      drawStar(ctx,  s2x, s2y, 5, [140, 205, 255]);
+      if (s1Front)  drawStar(ctx, s1x, s1y, 6, [225, 242, 255]);
 
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.strokeStyle = `rgba(${r},${g2},255,${bright * 0.9})`;
-        ctx.lineWidth = s.thickness * (1 + warpProgress * 0.5);
-        ctx.stroke();
-      }
-
-      // Explosion flash — white to ice blue, zero purple
-      if (inExplode || inFlash) {
-        const t = inFlash
-          ? 1 - (e - T_WARP - T_EXPLODE) / T_FLASH
-          : (e - T_WARP) / T_EXPLODE;
-        const intensity = Math.pow(Math.sin(t * Math.PI * 0.95), 0.5);
-        const flashGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, W * 0.65);
-        flashGrad.addColorStop(0,    `rgba(255,255,255,${intensity * 0.95})`);
-        flashGrad.addColorStop(0.2,  `rgba(190,225,255,${intensity * 0.45})`);
-        flashGrad.addColorStop(0.55, `rgba(100,170,240,${intensity * 0.15})`);
-        flashGrad.addColorStop(1,    "transparent");
-        ctx.fillStyle = flashGrad;
-        ctx.fillRect(0, 0, W, H);
-      }
+      ctx.restore();
 
       rafId = requestAnimationFrame(draw);
     };
 
+    // Solid fill before first frame to prevent flash
     ctx.fillStyle = BG;
     ctx.fillRect(0, 0, W, H);
-    rafId = requestAnimationFrame(draw);
 
+    rafId = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(rafId);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
