@@ -24,9 +24,10 @@ interface OrbitConfig {
 // SkillsPlanet.tsx). Keep radius + panelReach * scale comfortably under that
 // limit for every entry here.
 const ORBITS: OrbitConfig[] = [
-  { radius: 3.1, speed: 0.26, tiltX: -0.2, tiltZ: 0.1, phase: 0, scale: 0.42, accentColor: "#ff5b5b" },
-  { radius: 3.2, speed: -0.15, tiltX: 0.68, tiltZ: -0.32, phase: 2.35, scale: 0.38, accentColor: "#5be0ff" },
-  { radius: 3.35, speed: 0.09, tiltX: -1.05, tiltZ: 0.48, phase: 4.55, scale: 0.46, accentColor: "#ffd45b" },
+  { radius: 3.1, speed: 0.24, tiltX: -0.18, tiltZ: 0.12, phase: 0, scale: 0.64, accentColor: "#ff5b5b" },
+  { radius: 3.25, speed: -0.14, tiltX: 0.58, tiltZ: -0.3, phase: 1.9, scale: 0.58, accentColor: "#5be0ff" },
+  { radius: 3.3, speed: 0.1, tiltX: -0.88, tiltZ: 0.46, phase: 3.6, scale: 0.5, accentColor: "#ffd45b" },
+  { radius: 3.5, speed: -0.19, tiltX: 0.28, tiltZ: 0.68, phase: 5.1, scale: 0.5, accentColor: "#a78bfa" },
 ];
 
 function usePanelTexture(): THREE.Texture {
