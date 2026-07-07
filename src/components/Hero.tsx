@@ -1,14 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, type Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GitHubIcon } from "./icons";
 import { personal } from "@/data/personal";
+import { useRef } from "react";
 
 export function Hero() {
   const prefersReduced = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, prefersReduced ? 0 : -60]);
 
   const containerVariants: Variants = {
     hidden: {},
@@ -21,8 +31,14 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[calc(100vh-4rem)] flex items-center">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 w-full">
+    <section
+      ref={ref}
+      className="relative min-h-[calc(100vh-4rem)] flex items-center"
+    >
+      <motion.div
+        style={{ opacity, y }}
+        className="max-w-6xl mx-auto px-4 sm:px-6 py-20 w-full"
+      >
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -65,7 +81,7 @@ export function Hero() {
             </Button>
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
