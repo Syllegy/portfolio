@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { GitHubIcon } from "./icons";
 import { personal } from "@/data/personal";
 import { useRef } from "react";
+import { NeutronStars } from "./NeutronStars";
 
 export function Hero() {
   const prefersReduced = useReducedMotion();
@@ -33,8 +34,9 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[calc(100vh-4rem)] flex items-center"
+      className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
     >
+      <NeutronStars />
       <motion.div
         style={{ opacity, y }}
         className="max-w-6xl mx-auto px-4 sm:px-6 py-20 w-full"
