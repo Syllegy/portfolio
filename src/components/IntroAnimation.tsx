@@ -180,11 +180,13 @@ export function IntroAnimation() {
   if (!visible) return null;
 
   return (
+    // No CSS background — transparent pixels from destination-out must show the page,
+    // not the canvas element's own background. The dark fill comes from the draw loop.
     <canvas
       ref={canvasRef}
       aria-hidden="true"
       className="fixed inset-0 z-[200] pointer-events-none"
-      style={{ background: BG }}
+      style={{ opacity: 0 }}
     />
   );
 }

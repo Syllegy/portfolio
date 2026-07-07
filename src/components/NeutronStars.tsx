@@ -40,10 +40,19 @@ export function NeutronStars() {
     if (!ctx) return;
 
     const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      if (w > 0 && h > 0) {
+        canvas.width  = w;
+        canvas.height = h;
+      }
     };
     resize();
+
+    // Fade in via JS so it's reliable regardless of CSS animation support
+    canvas.style.opacity    = "0";
+    canvas.style.transition = "opacity 1.4s ease-out";
+    requestAnimationFrame(() => { canvas.style.opacity = "1"; });
     window.addEventListener("resize", resize);
 
     const start = performance.now();
@@ -107,7 +116,7 @@ export function NeutronStars() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-0 w-full h-full pointer-events-none animate-[fadeIn_1.4s_ease-out_forwards]"
+      className="absolute inset-0 w-full h-full pointer-events-none"
     />
   );
 }
