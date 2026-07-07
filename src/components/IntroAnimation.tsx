@@ -103,8 +103,8 @@ export function IntroAnimation() {
       const s2y = cy - sinOrb * r2 * TILT;
 
       // Depth: near-side stars appear ~7% larger
-      const s1r = 6   * (1 + sinOrb * 0.07);
-      const s2r = 5   * (1 - sinOrb * 0.07);
+      const s1r = 10  * (1 + sinOrb * 0.07);
+      const s2r = 8.5 * (1 - sinOrb * 0.07);
 
       // ── Fill background ──────────────────────────────────────────────────
       ctx.fillStyle = BG;
@@ -165,7 +165,15 @@ export function IntroAnimation() {
     ctx.fillRect(0, 0, W, H);
     rafId = requestAnimationFrame(draw);
 
-    return () => cancelAnimationFrame(rafId);
+    // Fade the canvas IN from transparent so the intro doesn't appear abruptly
+    canvas.style.opacity  = "0";
+    canvas.style.transition = "opacity 0.9s ease-out";
+    const fadeInTimer = setTimeout(() => { canvas.style.opacity = "1"; }, 40);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(fadeInTimer);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -74,8 +74,8 @@ export function NeutronStars() {
       const s2y = cy - sinOrb * r2 * TILT;
 
       // Depth-based sizing
-      const s1r = 5.5 * (1 + sinOrb * 0.07);
-      const s2r = 4.5 * (1 - sinOrb * 0.07);
+      const s1r = 8.5 * (1 + sinOrb * 0.07);
+      const s2r = 7.0 * (1 - sinOrb * 0.07);
 
       // Field lines (tilted ellipse rings)
       drawFieldLines(ctx, cx, cy, 510, 0.60, TILT);
