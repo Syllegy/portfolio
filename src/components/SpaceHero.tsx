@@ -75,6 +75,11 @@ export function SpaceHero() {
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 1.75]}
         camera={{ fov: 50, near: 0.1, far: 200 }}
+        // Ensure a fully transparent clear so the site-wide starfield behind
+        // the Hero (twinkling stars + breathing flare dots) shows through,
+        // consistent on every device — some browsers default clearAlpha to 1
+        // even when the context itself supports alpha.
+        onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
       >
         <CameraRig skipIntro={skipIntro} />
         <NeutronBinaryScene />

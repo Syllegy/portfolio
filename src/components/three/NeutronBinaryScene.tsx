@@ -5,7 +5,6 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { Star } from "./Star";
 import { JetParticles } from "./JetParticles";
-import { FieldRings } from "./FieldRings";
 
 const SEP = 5.2;
 const M1 = 1.45;
@@ -46,8 +45,6 @@ export function NeutronBinaryScene() {
 
   return (
     <group ref={tiltGroup} rotation={[-0.42, 0.5, 0]}>
-      <FieldRings maxRadius={22} />
-
       <group ref={star1}>
         <Star color={[225, 242, 255]} radius={0.55} />
       </group>
