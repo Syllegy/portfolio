@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Hero } from "@/components/Hero";
 import { ServicesGrid } from "@/components/ServicesGrid";
-import { SkillsGrid } from "@/components/SkillsGrid";
+import { SkillsCarousel } from "@/components/SkillsCarousel";
 import { Timeline } from "@/components/Timeline";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AnimateIn } from "@/components/AnimateIn";
@@ -43,7 +43,7 @@ export default function HomePage() {
               </Button>
             </div>
           </AnimateIn>
-          <SkillsGrid preview />
+          <SkillsCarousel />
         </div>
       </section>
 

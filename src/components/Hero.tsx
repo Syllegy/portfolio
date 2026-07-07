@@ -45,14 +45,13 @@ export function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-3xl"
         >
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
+            className="max-w-4xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
           >
             Small Footprint.<br />
-            <span className="text-gradient">Massive</span> Performance.
+            <span className="text-gradient">Massive</span> Impact.
           </motion.h1>
 
           <motion.p
