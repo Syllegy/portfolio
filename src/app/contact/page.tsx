@@ -14,19 +14,27 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div className="relative">
+      {/* Margin accent planet — only shown once there's real space beside the content column, so it never overlaps text. */}
       <PagePlanet
-        variant="contact"
-        className="absolute top-14 right-6 sm:right-24 w-16 h-16 sm:w-24 sm:h-24"
+        variant="contactAccent"
+        seed={2}
+        className="hidden xl:block absolute top-72 right-6 w-16 h-16 opacity-90"
       />
-      <AnimateIn className="mb-12">
-        <SectionHeading
-          title="Get in Touch"
-          subtitle="Have a project you'd like to discuss? I'd love to hear about it."
-        />
-      </AnimateIn>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+        <PagePlanet
+          variant="contact"
+          className="absolute top-14 right-6 sm:right-24 w-16 h-16 sm:w-24 sm:h-24"
+        />
+        <AnimateIn className="mb-12">
+          <SectionHeading
+            title="Get in Touch"
+            subtitle="Have a project you'd like to discuss? I'd love to hear about it."
+          />
+        </AnimateIn>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
         <AnimateIn className="lg:col-span-2 space-y-6" direction="right">
           <h3 className="font-semibold text-base">Contact Info</h3>
           <dl className="space-y-5">
@@ -74,12 +82,13 @@ export default function ContactPage() {
           </div>
         </AnimateIn>
 
-        <AnimateIn className="lg:col-span-3" delay={0.15}>
-          <div className="bg-card rounded-sm p-6 sm:p-8">
-            <h3 className="font-semibold text-base mb-6">Send a Message</h3>
-            <ContactForm />
-          </div>
-        </AnimateIn>
+          <AnimateIn className="lg:col-span-3" delay={0.15}>
+            <div className="bg-card rounded-sm p-6 sm:p-8">
+              <h3 className="font-semibold text-base mb-6">Send a Message</h3>
+              <ContactForm />
+            </div>
+          </AnimateIn>
+        </div>
       </div>
     </div>
   );

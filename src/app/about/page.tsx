@@ -17,17 +17,25 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div className="relative">
+      {/* Margin accent planet — only shown once there's real space beside the content column, so it never overlaps text. */}
       <PagePlanet
-        variant="about"
-        className="absolute -top-4 right-2 sm:right-16 w-24 h-24 sm:w-36 sm:h-36"
+        variant="aboutAccent"
+        seed={2}
+        className="hidden xl:block absolute top-48 left-6 w-16 h-16 opacity-90"
       />
-      <AnimateIn className="mb-16">
-        <SectionHeading
-          title="About Me"
-          subtitle="The story behind the work."
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+        <PagePlanet
+          variant="about"
+          className="absolute -top-4 right-2 sm:right-16 w-24 h-24 sm:w-36 sm:h-36"
         />
-      </AnimateIn>
+        <AnimateIn className="mb-16">
+          <SectionHeading
+            title="About Me"
+            subtitle="The story behind the work."
+          />
+        </AnimateIn>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-24">
         <AnimateIn className="lg:col-span-2 space-y-5" direction="right">
@@ -104,10 +112,11 @@ export default function AboutPage() {
         </AnimateIn>
       </div>
 
-      <AnimateIn className="mb-10">
-        <SectionHeading title="Experience" />
-      </AnimateIn>
-      <Timeline />
+        <AnimateIn className="mb-10">
+          <SectionHeading title="Experience" />
+        </AnimateIn>
+        <Timeline />
+      </div>
     </div>
   );
 }
