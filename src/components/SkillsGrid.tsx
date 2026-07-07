@@ -14,12 +14,40 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
   tools: Wrench,
 };
 
+// Simple Icons CDN slugs — white (#ffffff) variant
+const SKILL_ICONS: Record<string, string> = {
+  "JavaScript":            "javascript",
+  "TypeScript":            "typescript",
+  "PHP":                   "php",
+  "React":                 "react",
+  "Next.js":               "nextdotjs",
+  "Tailwind CSS":          "tailwindcss",
+  "Node.js":               "nodedotjs",
+  "Shopify":               "shopify",
+  "WordPress":             "wordpress",
+  "Google Analytics":      "googleanalytics",
+  "Google Search Console": "googlesearchconsole",
+  "SEMRush":               "semrush",
+  "Git":                   "git",
+  "GitHub":                "github",
+  "VS Code":               "visualstudiocode",
+  "Vercel":                "vercel",
+  "SCSS":                  "sass",
+  "HTML":                  "html5",
+};
+
+function iconUrl(slug: string) {
+  return `https://cdn.simpleicons.org/${slug}/ffffff`;
+}
+
 interface SkillTagProps {
   name: string;
   index: number;
 }
 
 function SkillTag({ name, index }: SkillTagProps) {
+  const slug = SKILL_ICONS[name];
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.88 }}
@@ -27,9 +55,21 @@ function SkillTag({ name, index }: SkillTagProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.22, delay: index * 0.04 }}
       whileHover={{ y: -3, scale: 1.04 }}
-      className="flex items-center justify-center px-4 py-3 text-sm font-medium cursor-default select-none bg-muted/70 rounded-sm text-foreground/70 hover:text-foreground hover:bg-muted transition-colors duration-150"
+      className="flex flex-col items-center justify-center gap-2 px-3 py-4 text-xs font-medium cursor-default select-none bg-muted/70 rounded-sm text-foreground/70 hover:text-foreground hover:bg-muted transition-colors duration-150"
     >
-      {name}
+      {slug ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={iconUrl(slug)}
+          alt={name}
+          width={22}
+          height={22}
+          className="opacity-80 group-hover:opacity-100"
+        />
+      ) : (
+        <span className="w-5 h-5" />
+      )}
+      <span className="text-center leading-tight">{name}</span>
     </motion.div>
   );
 }
@@ -50,7 +90,6 @@ export function SkillsGrid({ preview = false }: SkillsGridProps) {
         return (
           <AnimateIn key={category.id} delay={idx * 0.08} direction="up">
             <div className="bg-card rounded-sm h-full overflow-hidden">
-              {/* Card header with icon */}
               <div className="flex items-center gap-3 px-6 pt-5 pb-4 border-b border-border/40">
                 {Icon && (
                   <div className="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center shrink-0">
@@ -60,13 +99,12 @@ export function SkillsGrid({ preview = false }: SkillsGridProps) {
                 <p className="text-xs font-semibold uppercase tracking-widest text-foreground/60">
                   {category.label}
                 </p>
-                <span className="ml-auto text-xs font-mono text-foreground/60/50">
+                <span className="ml-auto text-xs font-mono text-foreground/30">
                   {category.skills.length}
                 </span>
               </div>
 
-              {/* Tags grid */}
-              <div className="p-4 grid grid-cols-2 gap-2">
+              <div className="p-4 grid grid-cols-3 gap-2">
                 {category.skills.map((skill, skillIdx) => (
                   <SkillTag key={skill} name={skill} index={skillIdx} />
                 ))}
