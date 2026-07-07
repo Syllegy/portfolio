@@ -20,7 +20,7 @@ export default function ProjectsPage() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
         <PagePlanet
           variant="work"
-          className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+          className="absolute top-8 right-0 sm:right-2 w-28 h-28 sm:w-40 sm:h-40"
         />
         <AnimateIn className="mb-12">
           <SectionHeading
@@ -50,7 +50,7 @@ export default function ProjectsPage() {
     <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <PagePlanet
         variant="work"
-        className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+        className="absolute top-8 right-0 sm:right-2 w-28 h-28 sm:w-40 sm:h-40"
       />
       <AnimateIn className="mb-12">
         <SectionHeading

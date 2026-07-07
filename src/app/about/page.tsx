@@ -20,7 +20,7 @@ export default function AboutPage() {
     <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <PagePlanet
         variant="about"
-        className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+        className="absolute -top-4 right-2 sm:right-16 w-24 h-24 sm:w-36 sm:h-36"
       />
       <AnimateIn className="mb-16">
         <SectionHeading

@@ -17,7 +17,7 @@ export default function ContactPage() {
     <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <PagePlanet
         variant="contact"
-        className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+        className="absolute top-14 right-6 sm:right-24 w-16 h-16 sm:w-24 sm:h-24"
       />
       <AnimateIn className="mb-12">
         <SectionHeading

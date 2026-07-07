@@ -27,7 +27,7 @@ export function PagePlanet({ variant, className }: PagePlanetProps) {
       <Canvas
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 1.75]}
-        camera={{ fov: 40, near: 0.1, far: 50, position: [0, 0.6, 5] }}
+        camera={{ fov: 40, near: 0.1, far: 50, position: [0, 0.6, 5.5] }}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
       >
         <Planet

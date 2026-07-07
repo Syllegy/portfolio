@@ -15,7 +15,7 @@ export default function SkillsPage() {
     <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
       <PagePlanet
         variant="skills"
-        className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+        className="absolute -top-2 left-0 sm:left-6 w-20 h-20 sm:w-32 sm:h-32"
       />
       <AnimateIn className="mb-12">
         <SectionHeading

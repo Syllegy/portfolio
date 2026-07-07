@@ -25,8 +25,10 @@ export function Planet({
   const bodyRef = useRef<THREE.Mesh>(null);
   const moonRef = useRef<THREE.Group>(null);
 
+  // Kept compact (well inside the camera frustum) so the ring/moon never
+  // get clipped by the canvas edge regardless of container size.
   const ringGeometry = useMemo(
-    () => (hasRing ? new THREE.RingGeometry(radius * 1.5, radius * 2.3, 64) : null),
+    () => (hasRing ? new THREE.RingGeometry(radius * 1.3, radius * 1.5, 64) : null),
     [hasRing, radius],
   );
 
@@ -58,8 +60,8 @@ export function Planet({
 
       {hasMoon && (
         <group ref={moonRef}>
-          <mesh position={[radius * 2.6, radius * 0.4, 0]}>
-            <sphereGeometry args={[radius * 0.22, 20, 20]} />
+          <mesh position={[radius * 1.5, radius * 0.25, 0]}>
+            <sphereGeometry args={[radius * 0.2, 20, 20]} />
             <meshStandardMaterial color={accentColor ?? "#cbd5e1"} roughness={0.9} />
           </mesh>
         </group>
