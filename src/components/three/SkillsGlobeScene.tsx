@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { getGlowTexture } from "@/lib/glowTexture";
 import { fibonacciSpherePoint } from "@/lib/sphere";
 import { skillCategories } from "@/data/skills";
+import { skillIconUrl } from "@/lib/skillIcons";
 
 const RADIUS = 3;
 
@@ -59,10 +60,10 @@ function DustShell() {
     <points geometry={geometry}>
       <pointsMaterial
         map={tex}
-        color="#bcd4ff"
-        size={0.06}
+        color="#eaf3ff"
+        size={0.075}
         transparent
-        opacity={0.55}
+        opacity={0.85}
         sizeAttenuation
         depthWrite={false}
         blending={THREE.AdditiveBlending}
@@ -81,6 +82,7 @@ interface SkillPointProps {
 function SkillPoint({ position, name, color }: SkillPointProps) {
   const dotRef = useRef<THREE.Mesh>(null);
   const labelRef = useRef<HTMLDivElement>(null);
+  const iconUrl = skillIconUrl(name);
 
   useFrame(({ camera }) => {
     const dot = dotRef.current;
@@ -106,9 +108,16 @@ function SkillPoint({ position, name, color }: SkillPointProps) {
       <Html center distanceFactor={7} style={{ pointerEvents: "none" }}>
         <div
           ref={labelRef}
-          className="px-2 py-1 rounded-sm text-[11px] font-mono font-medium whitespace-nowrap bg-background/85 border border-border/60 backdrop-blur-sm"
+          className="flex items-center gap-1.5 px-2 py-1 rounded-sm text-[11px] font-mono font-medium whitespace-nowrap bg-background/85 border border-border/60 backdrop-blur-sm"
           style={{ color, opacity: 0 }}
         >
+          {iconUrl && (
+            // A light chip behind the logo keeps dark-branded icons (GitHub, Vercel, Next.js) visible against the dark background.
+            <span className="flex items-center justify-center w-4 h-4 rounded-full bg-white/95 p-0.5 shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={iconUrl} alt="" width={12} height={12} />
+            </span>
+          )}
           {name}
         </div>
       </Html>
