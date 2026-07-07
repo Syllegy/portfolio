@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { drawJets, drawStar, drawFieldLines } from "@/lib/neutronStarHelpers";
 
-// Must exceed IntroAnimation's T_HOLD + T_ZOOM * FADE_AT + T_FADE
-const INTRO_MS = 200 + 3500 * 0.80 + 1100; // ≈ 4100ms
+// Total intro duration before this component appears
+const INTRO_MS = 250 + 3600 * 0.82 + 1200; // T_HOLD + T_ZOOM*FADE_AT + T_FADE ≈ 4402ms
 
 const SEP   = 72;
 const M1    = 1.45;
@@ -12,11 +12,11 @@ const M2    = 1.15;
 const r1    = SEP * M2 / (M1 + M2);
 const r2    = SEP * M1 / (M1 + M2);
 
-const PERIOD  = 5200;
-const SPIN1   = 2300;
-const SPIN2   = 3400;
-const JET_LEN = 420;  // px — sweeps across the hero section
-const TILT    = 0.38; // y-axis compression for 3D disk tilt
+const PERIOD         = 5200;   // ms
+const TILT           = 0.28;
+const JET_TILT       = 0.26;   // rad from vertical
+const JET_PRECESS_MS = 28000;  // very slow precession
+const JET_LEN        = 430;    // px
 
 export function NeutronStars() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,34 +52,37 @@ export function NeutronStars() {
     const draw = (now: number) => {
       const W  = canvas.width;
       const H  = canvas.height;
-      // Slightly right-of-centre on wide screens; centred on mobile
       const cx = W > 768 ? W * 0.64 : W * 0.5;
       const cy = H * 0.50;
 
       ctx.clearRect(0, 0, W, H);
 
-      const e     = now - start;
-      const orb   = (e / PERIOD) * Math.PI * 2;
-      const spin1 = (e / SPIN1)  * Math.PI * 2;
-      const spin2 = (e / SPIN2)  * Math.PI * 2 + 1.1;
+      const e       = now - start;
+      const orb     = (e / PERIOD)         * Math.PI * 2;
+      const precess = (e / JET_PRECESS_MS) * Math.PI * 2;
 
-      // Elliptical orbit (3D disk tilt)
-      const s1x = cx + Math.cos(orb) * r1;
-      const s1y = cy + Math.sin(orb) * r1 * TILT;
-      const s2x = cx - Math.cos(orb) * r2;
-      const s2y = cy - Math.sin(orb) * r2 * TILT;
+      // Near-vertical jet axes with slow precession (X-shape)
+      const jet1Angle = Math.PI / 2 + JET_TILT + precess * 0.06;
+      const jet2Angle = Math.PI / 2 - JET_TILT - precess * 0.05;
 
-      // Depth-based size scaling
+      // Elliptical orbits (3D disk tilt)
       const sinOrb = Math.sin(orb);
-      const s1r    = 5.5 * (1 + sinOrb * 0.07);
-      const s2r    = 4.5 * (1 - sinOrb * 0.07);
+      const cosOrb = Math.cos(orb);
+      const s1x = cx + cosOrb * r1;
+      const s1y = cy + sinOrb * r1 * TILT;
+      const s2x = cx - cosOrb * r2;
+      const s2y = cy - sinOrb * r2 * TILT;
+
+      // Depth-based sizing
+      const s1r = 5.5 * (1 + sinOrb * 0.07);
+      const s2r = 4.5 * (1 - sinOrb * 0.07);
 
       // Field lines (tilted ellipse rings)
-      drawFieldLines(ctx, cx, cy, 500, 0.65, TILT);
+      drawFieldLines(ctx, cx, cy, 510, 0.60, TILT);
 
-      // Jets (wiggly, animated)
-      drawJets(ctx, s2x, s2y, spin2, JET_LEN, e, 0.70);
-      drawJets(ctx, s1x, s1y, spin1, JET_LEN, e, 0.75);
+      // Jets
+      drawJets(ctx, s2x, s2y, jet2Angle, JET_LEN, e, 0.68);
+      drawJets(ctx, s1x, s1y, jet1Angle, JET_LEN, e, 0.72);
 
       // Depth-sorted stars
       const s1Front = sinOrb > 0;

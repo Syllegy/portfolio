@@ -6,32 +6,34 @@ import {
   drawStar,
   drawFieldLines,
   easeOutCubic,
+  easeInOutCubic,
 } from "@/lib/neutronStarHelpers";
 
 const BG = "rgb(6, 8, 22)";
 
 // ── Timing ────────────────────────────────────────────────────────────────────
-const T_HOLD = 200;   // hold at close-up before pulling back
-const T_ZOOM = 3500;  // zoom 3.5x → 1x  (easeOutCubic: fast start, slow settle)
-const T_FADE = 1100;  // CSS opacity fade that OVERLAPS with the tail of T_ZOOM
+const T_HOLD = 250;    // ms — brief close-up before pulling back
+const T_ZOOM = 3600;   // ms — zoom 3.5× → 1× (easeOutCubic: fast then slow drift)
+const T_FADE = 1200;   // ms — CSS fade; starts at FADE_AT fraction of zoom
 
-// Fade starts at this fraction of zoom progress (zoom is ~1.02x here, nearly 1x)
-const FADE_AT = 0.80;
+const FADE_AT      = 0.82; // start fading when zoom is 82% complete (~1.08×)
+const REVEAL_START = 0.22; // page starts appearing from edges at this zoom fraction
 
-// ── Orbital / physics constants ───────────────────────────────────────────────
+// ── Orbital parameters ────────────────────────────────────────────────────────
 const SEP   = 72;
 const M1    = 1.45;
 const M2    = 1.15;
-const r1    = SEP * M2 / (M1 + M2); // ~32 px (heavier star, closer to CoM)
-const r2    = SEP * M1 / (M1 + M2); // ~40 px
+const r1    = SEP * M2 / (M1 + M2);
+const r2    = SEP * M1 / (M1 + M2);
 
-const PERIOD  = 4800;  // orbital period ms
-const SPIN1   = 2300;  // star 1 pulsar spin ms
-const SPIN2   = 3400;  // star 2 pulsar spin ms
-const JET_LEN = 380;   // logical px — 3.5× zoom makes these span the whole screen
+const PERIOD = 4800;  // ms — orbital period
+const TILT   = 0.28;  // y-compression: disk viewed from ~16° elevation
 
-// 3D disk tilt: y-axis compression factor for orbits/rings
-const TILT = 0.38;
+// Jet axes — fixed near-vertical with slight opposing tilts (X-shape)
+// Both stars' jets point mostly up/down; their slight offsets create a scissors cross.
+const JET_TILT        = 0.26;        // rad offset from vertical (~15°)
+const JET_PRECESS_MS  = 28000;       // very slow precession period
+const JET_LEN         = 385;         // logical px
 
 export function IntroAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,22 +54,26 @@ export function IntroAnimation() {
     canvas.height = window.innerHeight;
     const W  = canvas.width;
     const H  = canvas.height;
-    const cx = W / 2;
-    const cy = H / 2;
+
+    // Final resting centre (matches NeutronStars homepage position)
+    const cxStart = W * 0.50;
+    const cxEnd   = W * 0.64;
+    const cy      = H * 0.50;
+
+    const maxRevealR = Math.sqrt(W * W + H * H) / 2 + 150;
+    const minRevealR = 310;
+    const EDGE_W     = 130;
 
     const start = performance.now();
     let rafId   = 0;
     let fading  = false;
 
     const draw = (now: number) => {
-      const e = now - start;
-
-      // Zoom progress (clamped to [0,1])
+      const e     = now - start;
       const zoomT = Math.min(Math.max(e - T_HOLD, 0) / T_ZOOM, 1);
       const zoom  = 3.5 - easeOutCubic(zoomT) * 2.5; // 3.5 → 1.0
 
-      // Kick off CSS fade once zoom is nearly complete, but keep RAF running
-      // so the stars continue orbiting smoothly during the fade-out.
+      // Kick off CSS fade — but keep RAF running so stars orbit through it
       if (!fading && zoomT >= FADE_AT) {
         fading = true;
         canvas.style.transition = `opacity ${T_FADE}ms ease-in-out`;
@@ -79,46 +85,50 @@ export function IntroAnimation() {
         }, T_FADE + 100);
       }
 
-      // Angles
-      const orb   = (e / PERIOD) * Math.PI * 2;
-      const spin1 = (e / SPIN1)  * Math.PI * 2;
-      const spin2 = (e / SPIN2)  * Math.PI * 2 + 1.1;
+      // Slowly pan centre from screen-middle to homepage star position
+      const cx = cxStart + (cxEnd - cxStart) * easeOutCubic(zoomT);
 
-      // Star screen positions — y-compressed for 3D tilted-disk look
-      const s1x = cx + Math.cos(orb) * r1;
-      const s1y = cy + Math.sin(orb) * r1 * TILT;
-      const s2x = cx - Math.cos(orb) * r2;
-      const s2y = cy - Math.sin(orb) * r2 * TILT;
+      // Orbital & jet angles
+      const orb         = (e / PERIOD) * Math.PI * 2;
+      const precess     = (e / JET_PRECESS_MS) * Math.PI * 2;
+      const jet1Angle   = Math.PI / 2 + JET_TILT + precess * 0.06;
+      const jet2Angle   = Math.PI / 2 - JET_TILT - precess * 0.05;
 
-      // Depth-based size: stars at the "near" side appear slightly larger
+      // Star screen positions with perspective (tilted orbit = ellipse)
       const sinOrb = Math.sin(orb);
+      const cosOrb = Math.cos(orb);
+      const s1x = cx + cosOrb * r1;
+      const s1y = cy + sinOrb * r1 * TILT;
+      const s2x = cx - cosOrb * r2;
+      const s2y = cy - sinOrb * r2 * TILT;
+
+      // Depth: near-side stars appear ~7% larger
       const s1r = 6   * (1 + sinOrb * 0.07);
       const s2r = 5   * (1 - sinOrb * 0.07);
 
-      // ── Draw ──────────────────────────────────────────────────────────────
+      // ── Fill background ──────────────────────────────────────────────────
       ctx.fillStyle = BG;
       ctx.fillRect(0, 0, W, H);
 
-      // Subtle nebula glow behind the system
-      const neb = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.5);
-      neb.addColorStop(0,   "rgba(18,45,120,0.30)");
-      neb.addColorStop(0.5, "rgba(8,22,65,0.12)");
+      // Blue nebula glow behind system
+      const neb = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.48);
+      neb.addColorStop(0,   "rgba(15,40,110,0.28)");
+      neb.addColorStop(0.5, "rgba(6,18,60,0.10)");
       neb.addColorStop(1,   "transparent");
       ctx.fillStyle = neb;
       ctx.fillRect(0, 0, W, H);
 
-      // Apply zoom — anchored to canvas centre so zoom is from the middle
+      // ── Apply zoom centred on the (slowly panning) focal point ───────────
       ctx.save();
       ctx.translate(cx, cy);
       ctx.scale(zoom, zoom);
       ctx.translate(-cx, -cy);
 
-      // Field lines (ellipses = tilted disk)
-      drawFieldLines(ctx, cx, cy, 480, 1, TILT);
+      drawFieldLines(ctx, cx, cy, 490, 1, TILT);
 
-      // Jets behind stars
-      drawJets(ctx, s2x, s2y, spin2, JET_LEN, e);
-      drawJets(ctx, s1x, s1y, spin1, JET_LEN, e);
+      // Jets (fixed near-vertical axes, slow precession)
+      drawJets(ctx, s2x, s2y, jet2Angle, JET_LEN, e);
+      drawJets(ctx, s1x, s1y, jet1Angle, JET_LEN, e);
 
       // Depth-sorted stars
       const s1Front = sinOrb > 0;
@@ -126,6 +136,26 @@ export function IntroAnimation() {
       drawStar(ctx,  s2x, s2y, s2r, [140, 205, 255]);
       if (s1Front)  drawStar(ctx, s1x, s1y, s1r, [225, 242, 255]);
 
+      ctx.restore();
+
+      // ── Progressive reveal: erase canvas outside a shrinking circle ──────
+      // Page becomes visible from the edges as the camera pulls back.
+      const revealProgress = easeInOutCubic(
+        Math.max(0, (zoomT - REVEAL_START) / (1 - REVEAL_START))
+      );
+      const revealR = minRevealR + (maxRevealR - minRevealR) * (1 - revealProgress);
+
+      // Radial gradient: transparent inside revealR (keeps stars), opaque outside (erases bg)
+      const grad = ctx.createRadialGradient(
+        cx, cy, Math.max(0, revealR - EDGE_W),
+        cx, cy, revealR + EDGE_W,
+      );
+      grad.addColorStop(0, "rgba(0,0,0,0)");
+      grad.addColorStop(1, "rgba(0,0,0,1)");
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
       ctx.restore();
 
       rafId = requestAnimationFrame(draw);
