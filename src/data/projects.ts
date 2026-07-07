@@ -122,6 +122,7 @@ export const projects: Project[] = [
       "Ongoing maintenance, technical SEO, and frontend development for a Shopify storefront selling non-alcoholic, THC-infused spirits and cocktail mixers.",
     longDescription:
       "IGETHI is a premium wellness brand offering non-alcoholic, THC-infused spirits and cocktail mixers designed as a mindful alternative to traditional alcoholic beverages. As part of the development team, I contribute to the ongoing improvement, optimization, and maintenance of the Shopify storefront, with a focus on technical SEO, frontend development, performance, and user experience.",
+    image: "/images/project-igethi.png",
     technologies: [
       "Shopify",
       "Shopify Liquid",
