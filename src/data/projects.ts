@@ -175,6 +175,7 @@ export const projects: Project[] = [
       "Ongoing frontend and backend development, technical SEO, and performance optimization for a luxury addiction recovery treatment directory.",
     longDescription:
       "Find Luxury Rehabs is an online directory that connects individuals and families with luxury residential treatment centers specializing in addiction recovery and mental health care. As part of the development team, I contribute to the ongoing maintenance, optimization, and enhancement of the platform through frontend development, backend development, technical SEO, and performance improvements.",
+    image: "/images/project-find-luxury-rehabs.png",
     technologies: [
       "Next.js",
       "React",
