@@ -35,9 +35,12 @@ export function AsteroidBeltScene() {
 
   return (
     <group>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[3, 4, 6]} intensity={1.3} color="#eaf3ff" />
-      <directionalLight position={[-4, -2, -3]} intensity={0.35} color="#5b8dff" />
+      {/* Lower ambient + a stronger, more raking key light so the crater
+          bump mapping actually casts visible shading instead of flattening
+          out under a wash of even light. */}
+      <ambientLight intensity={0.38} />
+      <directionalLight position={[5, 3, 4]} intensity={1.8} color="#eaf3ff" />
+      <directionalLight position={[-4, -2, -3]} intensity={0.3} color="#5b8dff" />
       <group ref={pivotRef}>
         {skills.map((skill, i) => (
           <SkillAsteroid

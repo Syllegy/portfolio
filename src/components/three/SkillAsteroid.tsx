@@ -5,8 +5,11 @@ import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { createAsteroidGeometry } from "@/lib/asteroidGeometry";
+import { getAsteroidTexture } from "@/lib/asteroidTexture";
 import { mulberry32 } from "@/lib/prng";
 import { skillIconUrl } from "@/lib/skillIcons";
+
+const TEXTURE_VARIANTS = 5;
 
 interface SkillAsteroidProps {
   name: string;
@@ -39,16 +42,23 @@ export function SkillAsteroid({ name, color, angle, radius, seed }: SkillAsteroi
     return { geometry: geo, tumbleAxis: axis, tumbleSpeed: speed };
   }, [seed]);
 
+  const { map, bumpMap } = useMemo(
+    () => getAsteroidTexture(seed % TEXTURE_VARIANTS),
+    [seed],
+  );
+
   const material = useMemo(
     () =>
       new THREE.MeshStandardMaterial({
-        color: "#8c8377",
-        roughness: 0.95,
-        metalness: 0.05,
+        map,
+        bumpMap,
+        bumpScale: 0.035,
+        roughness: 0.98,
+        metalness: 0.04,
         emissive: new THREE.Color(color),
-        emissiveIntensity: 0.24,
+        emissiveIntensity: 0.09,
       }),
-    [color],
+    [map, bumpMap, color],
   );
 
   const position = useMemo(
