@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
@@ -7,13 +7,15 @@ import { Footer } from "@/components/Footer";
 import { GlobalBackground } from "@/components/GlobalBackground";
 import { personal } from "@/data/personal";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Space Mono for headings — Space Grotesk (its designed pairing) for body copy.
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
@@ -74,7 +76,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
+      className={`${spaceMono.variable} ${spaceGrotesk.variable} h-full`}
       suppressHydrationWarning
     >
       <head>
