@@ -55,20 +55,8 @@ function SkillTag({ name, index }: SkillTagProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.22, delay: index * 0.04 }}
       whileHover={{ y: -3, scale: 1.04 }}
-      className="flex flex-col items-center justify-center gap-2 px-3 py-4 text-xs font-medium cursor-default select-none bg-muted/70 rounded-sm text-foreground/70 hover:text-foreground hover:bg-muted transition-colors duration-150"
+      className="flex items-center justify-center px-3 py-3 text-xs font-medium cursor-default select-none bg-muted/70 rounded-sm text-foreground/70 hover:text-foreground hover:bg-muted transition-colors duration-150"
     >
-      {slug ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={iconUrl(slug)}
-          alt={name}
-          width={22}
-          height={22}
-          className="opacity-80 group-hover:opacity-100"
-        />
-      ) : (
-        <span className="w-5 h-5" />
-      )}
       <span className="text-center leading-tight">{name}</span>
     </motion.div>
   );
