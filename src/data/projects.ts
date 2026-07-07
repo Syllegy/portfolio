@@ -115,6 +115,58 @@ export const projects: Project[] = [
       "Continued refinement through ongoing maintenance and feature development",
     ],
   },
+  {
+    slug: "igethi",
+    title: "IGETHI",
+    description:
+      "Ongoing maintenance, technical SEO, and frontend development for a Shopify storefront selling non-alcoholic, THC-infused spirits and cocktail mixers.",
+    longDescription:
+      "IGETHI is a premium wellness brand offering non-alcoholic, THC-infused spirits and cocktail mixers designed as a mindful alternative to traditional alcoholic beverages. As part of the development team, I contribute to the ongoing improvement, optimization, and maintenance of the Shopify storefront, with a focus on technical SEO, frontend development, performance, and user experience.",
+    technologies: [
+      "Shopify",
+      "Shopify Liquid",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Google Analytics",
+      "Google Search Console",
+      "SEMRush",
+    ],
+    liveUrl: "https://igethi.com/",
+    featured: true,
+    ongoing: true,
+    category: "Shopify",
+    problem:
+      "The storefront had broken and missing product imagery, large unoptimized images affecting page speed, outdated technical SEO, and an inconsistent heading hierarchy that impacted both accessibility and search visibility.",
+    solution:
+      "Working alongside the development team, I optimized and properly sized website images, implemented structured data across relevant pages, reorganized heading hierarchy for accessibility and SEO, refactored CSS for layout consistency, and continuously monitored Core Web Vitals.",
+    contributions: [
+      "Built responsive layouts for desktop and mobile devices",
+      "Created reusable Shopify components",
+      "Resolved mobile visual bugs and frontend inconsistencies",
+      "Implemented technical SEO improvements",
+      "Enhanced website accessibility",
+      "Added structured data (Schema.org markup)",
+      "Optimized Core Web Vitals",
+      "Improved heading hierarchy across key pages",
+      "Assisted with ongoing feature development and maintenance",
+    ],
+    challenges: [
+      "Broken and missing product imagery",
+      "Large, unoptimized images affecting page speed",
+      "Outdated technical SEO implementation",
+      "Inconsistent heading hierarchy impacting accessibility and SEO",
+      "Areas of the storefront requiring frontend refinement",
+    ],
+    results: [
+      "Faster page load times",
+      "Improved Google PageSpeed performance",
+      "Stronger technical SEO implementation",
+      "Enhanced mobile user experience",
+      "Improved accessibility and semantic page structure",
+      "Continued performance optimization across the storefront",
+    ],
+  },
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.featured);
