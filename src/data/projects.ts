@@ -67,6 +67,54 @@ export const projects: Project[] = [
       "Continuous delivery of new features and usability improvements",
     ],
   },
+  {
+    slug: "cypress-hemp",
+    title: "Cypress Hemp",
+    description:
+      "Ongoing frontend development, technical SEO, and accessibility improvements for a wellness brand specializing in CBD and THC products.",
+    longDescription:
+      "Contributing to the ongoing maintenance, optimization, and feature development of the Cypress Hemp Shopify storefront, with a strong focus on technical SEO, accessibility, frontend improvements, and performance.",
+    image: "/images/project-cypress-hemp.png",
+    technologies: [
+      "Shopify",
+      "React",
+      "SCSS",
+      "Google Analytics",
+      "Google Search Console",
+      "SEMRush",
+    ],
+    liveUrl: "https://www.cypresshemp.com/",
+    featured: true,
+    ongoing: true,
+    category: "Shopify",
+    problem:
+      "The storefront had accessibility gaps, visual inconsistencies across desktop and mobile, oversized images affecting load performance, and areas where technical SEO could be significantly strengthened.",
+    solution:
+      "Working as part of the development team, I addressed these issues through targeted accessibility enhancements, structured data implementation, CSS refactoring for layout consistency, and image optimization to improve loading performance across the site.",
+    contributions: [
+      "Built reusable React components for improved maintainability",
+      "Resolved responsive layout issues across desktop and mobile devices",
+      "Implemented technical SEO improvements across key pages",
+      "Enhanced website accessibility for a broader range of users",
+      "Added structured data (Schema.org markup) to strengthen search visibility",
+      "Optimized Core Web Vitals for improved page experience signals",
+      "Improved frontend usability and visual consistency",
+      "Assisted with ongoing feature development and storefront maintenance",
+    ],
+    challenges: [
+      "Improving overall accessibility across an existing Shopify theme",
+      "Resolving visual inconsistencies across desktop and mobile breakpoints",
+      "Optimizing oversized images without sacrificing visual quality",
+      "Introducing improvements to a live storefront without disrupting the user experience",
+    ],
+    results: [
+      "Improved accessibility and overall usability across the storefront",
+      "Better image optimization and faster asset loading",
+      "Stronger technical SEO implementation across key pages",
+      "Improved Core Web Vitals and page experience scores",
+      "Continued refinement through ongoing maintenance and feature development",
+    ],
+  },
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.featured);
