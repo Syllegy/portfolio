@@ -52,7 +52,7 @@ export function JetParticles({
   alpha = 1,
   count = 260,
   waveLen = 2.6,
-  waveAmp = 0.85,
+  waveAmp = 1.3,
 }: JetParticlesProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const tex = getGlowTexture();
@@ -107,7 +107,11 @@ export function JetParticles({
       const tn = d / length;
       dist[i] = tn;
 
-      const env = Math.pow(tn, 1.7) * waveAmp * length * 0.05;
+      // Stays tight and nearly straight close to the star, then whips into a
+      // visible wiggle in the outer portion of the jet — the ^2.6 curve
+      // keeps the first ~half of the stream almost dead-straight and
+      // concentrates nearly all of the sideways motion into the last third.
+      const env = Math.pow(tn, 2.6) * waveAmp * length * 0.05;
       const wx = Math.sin((d + waveSeed[i] * waveLen) / waveLen * Math.PI * 2 + t * 1.4) * env;
       const wz = Math.cos((d * 0.83 + waveSeed[i] * waveLen) / (waveLen * 1.3) * Math.PI * 2 + t * 1.1) * env * 0.8;
 

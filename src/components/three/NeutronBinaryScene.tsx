@@ -46,10 +46,10 @@ export function NeutronBinaryScene() {
   return (
     <group ref={tiltGroup} rotation={[-0.42, 0.5, 0]}>
       <group ref={star1}>
-        <Star color={[225, 242, 255]} radius={0.55} />
+        <Star color={[232, 244, 255]} radius={0.55} />
       </group>
       <group ref={star2}>
-        <Star color={[140, 205, 255]} radius={0.46} />
+        <Star color={[198, 224, 250]} radius={0.46} />
       </group>
 
       <group ref={jet1}>
