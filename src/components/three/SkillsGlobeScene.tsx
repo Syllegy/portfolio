@@ -8,7 +8,7 @@ import { getGlowTexture } from "@/lib/glowTexture";
 import { fibonacciSpherePoint } from "@/lib/sphere";
 import { skillCategories } from "@/data/skills";
 import { skillIconUrl } from "@/lib/skillIcons";
-import { OrbitingSatellite } from "./Satellite";
+import { SatelliteSwarm } from "./Satellite";
 
 const RADIUS = 3;
 
@@ -140,7 +140,7 @@ export function SkillsGlobeScene() {
       {points.map((p) => (
         <SkillPoint key={p.name} position={p.position} name={p.name} color={p.color} />
       ))}
-      <OrbitingSatellite />
+      <SatelliteSwarm />
     </group>
   );
 }

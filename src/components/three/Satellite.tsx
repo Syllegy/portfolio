@@ -1,13 +1,26 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-const ORBIT_RADIUS = 3.35;
-const ORBIT_SPEED = 0.16; // rad/s
-const ORBIT_TILT_X = -0.25;
-const ORBIT_TILT_Z = 0.12;
+interface OrbitConfig {
+  radius: number;
+  /** rad/s — sign controls direction, magnitude controls speed. Deliberately varied and unrelated to the globe's own auto-rotate speed so each satellite reads as having its own independent orbit. */
+  speed: number;
+  tiltX: number;
+  tiltZ: number;
+  /** Initial angle around the ring so satellites don't all start lined up. */
+  phase: number;
+  scale: number;
+  accentColor: string;
+}
+
+const ORBITS: OrbitConfig[] = [
+  { radius: 3.1, speed: 0.26, tiltX: -0.2, tiltZ: 0.1, phase: 0, scale: 0.58, accentColor: "#ff5b5b" },
+  { radius: 3.4, speed: -0.15, tiltX: 0.68, tiltZ: -0.32, phase: 2.35, scale: 0.5, accentColor: "#5be0ff" },
+  { radius: 3.6, speed: 0.09, tiltX: -1.05, tiltZ: 0.48, phase: 4.55, scale: 0.62, accentColor: "#ffd45b" },
+];
 
 function usePanelTexture(): THREE.Texture {
   return useMemo(() => {
@@ -43,6 +56,11 @@ function usePanelTexture(): THREE.Texture {
   }, []);
 }
 
+interface SatelliteModelProps {
+  scale: number;
+  accentColor: string;
+}
+
 /**
  * A small stylised satellite built from primitives: a central bus, two
  * solar-panel wings, a forward-facing dish, and a whip antenna. The dish is
@@ -52,11 +70,11 @@ function usePanelTexture(): THREE.Texture {
  * Y-rotation convention). Net effect: the satellite always noses forward
  * along its orbit with zero per-frame orientation math.
  */
-function SatelliteModel() {
+function SatelliteModel({ scale, accentColor }: SatelliteModelProps) {
   const panelTex = usePanelTexture();
 
   return (
-    <group scale={0.42} rotation={[0, Math.PI, 0]}>
+    <group scale={scale} rotation={[0, Math.PI, 0]}>
       <mesh>
         <boxGeometry args={[0.34, 0.2, 0.24]} />
         <meshStandardMaterial color="#d8dee8" metalness={0.55} roughness={0.35} />
@@ -97,29 +115,52 @@ function SatelliteModel() {
       </mesh>
       <mesh position={[0.17, 0.1, -0.1]}>
         <sphereGeometry args={[0.018, 8, 8]} />
-        <meshBasicMaterial color="#ff5b5b" />
+        <meshBasicMaterial color={accentColor} />
       </mesh>
     </group>
   );
 }
 
-/** Orbits the satellite around the skills globe on a fixed, tilted ring. Positioned outside the globe's dust shell/skill dots so it never intersects the planet. */
-export function OrbitingSatellite() {
+/**
+ * One satellite on its own fixed, tilted ring. Each ring's tilt is set once
+ * from its config (a plane distinct from — and mostly not aligned with — the
+ * globe's own vertical spin axis), and the pivot's rotation.y is advanced
+ * every frame at the config's own rate. Because this rotation is entirely
+ * independent of the globe/camera auto-rotation driving the rest of the
+ * scene, each satellite visibly drifts at its own speed and along its own
+ * plane rather than appearing glued to the planet's spin.
+ */
+function SatelliteOrbit({ config }: { config: OrbitConfig }) {
   const pivotRef = useRef<THREE.Group>(null);
 
+  useEffect(() => {
+    if (pivotRef.current) pivotRef.current.rotation.y = config.phase;
+  }, [config.phase]);
+
   useFrame((_, delta) => {
-    if (pivotRef.current) pivotRef.current.rotation.y += delta * ORBIT_SPEED;
+    if (pivotRef.current) pivotRef.current.rotation.y += delta * config.speed;
   });
 
   return (
-    <group rotation={[ORBIT_TILT_X, 0, ORBIT_TILT_Z]}>
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[4, 3, 5]} intensity={1.5} color="#eaf3ff" />
+    <group rotation={[config.tiltX, 0, config.tiltZ]}>
       <group ref={pivotRef}>
-        <group position={[ORBIT_RADIUS, 0, 0]}>
-          <SatelliteModel />
+        <group position={[config.radius, 0, 0]}>
+          <SatelliteModel scale={config.scale} accentColor={config.accentColor} />
         </group>
       </group>
     </group>
+  );
+}
+
+/** A small fleet of satellites orbiting the skills globe, each on its own tilted plane and speed, positioned outside the globe's dust shell/skill dots so none of them ever intersect the planet. */
+export function SatelliteSwarm() {
+  return (
+    <>
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[4, 3, 5]} intensity={1.5} color="#eaf3ff" />
+      {ORBITS.map((config, i) => (
+        <SatelliteOrbit key={i} config={config} />
+      ))}
+    </>
   );
 }
