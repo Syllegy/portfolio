@@ -4,53 +4,65 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
-import { getCardBackTexture } from "@/lib/cardBackTexture";
+import { createAsteroidGeometry } from "@/lib/asteroidGeometry";
+import { mulberry32 } from "@/lib/prng";
 import { skillIconUrl } from "@/lib/skillIcons";
 
-const CARD_WIDTH = 1.0;
-const CARD_HEIGHT = 1.25;
-const CARD_DEPTH = 0.06;
-
-interface SkillCardProps {
+interface SkillAsteroidProps {
   name: string;
   color: string;
-  /** Fixed slot angle around the ring (radians). */
+  /** Fixed slot angle around the belt (radians). */
   angle: number;
   radius: number;
+  seed: number;
 }
 
 /**
- * A single card on the skills carousel ring. Positioned at a fixed angle
- * around the ring's own local origin with rotation.y = angle, which makes
- * the card's front face (local +Z) point exactly radially outward — the
- * same direction as its position vector from the ring's centre. That means
- * the label's facing calculation below can reuse the card's own position
- * (normalized) directly as its front-face normal.
+ * A single rock in the skills asteroid belt. Sits at a fixed angle around
+ * the belt's own local origin, and tumbles continuously on its own randomly
+ * seeded axis — independent of, and at a different rate than, the belt's
+ * overall rotation — so it reads as its own free-tumbling body rather than
+ * something rigidly attached to the ring.
  */
-export function SkillCard({ name, color, angle, radius }: SkillCardProps) {
+export function SkillAsteroid({ name, color, angle, radius, seed }: SkillAsteroidProps) {
   const groupRef = useRef<THREE.Group>(null);
+  const rockRef = useRef<THREE.Mesh>(null);
   const labelRef = useRef<HTMLDivElement>(null);
-  const backTexture = getCardBackTexture(color);
   const iconUrl = skillIconUrl(name);
 
-  const materials = useMemo(() => {
-    const edge = new THREE.MeshStandardMaterial({ color: "#141d33", metalness: 0.3, roughness: 0.6 });
-    const front = new THREE.MeshStandardMaterial({ color: "#0f1830", metalness: 0.2, roughness: 0.55 });
-    const back = new THREE.MeshStandardMaterial({ map: backTexture, metalness: 0.15, roughness: 0.6 });
-    // BoxGeometry face order: +x, -x, +y, -y, +z (front), -z (back)
-    return [edge, edge, edge, edge, front, back];
-  }, [backTexture]);
+  const { geometry, tumbleAxis, tumbleSpeed } = useMemo(() => {
+    const rand = mulberry32(seed);
+    const baseRadius = 0.34 + rand() * 0.26;
+    const geo = createAsteroidGeometry(seed + 1000, baseRadius);
+    const axis = new THREE.Vector3(rand() - 0.5, rand() - 0.5, rand() - 0.5).normalize();
+    const speed = 0.18 + rand() * 0.32;
+    return { geometry: geo, tumbleAxis: axis, tumbleSpeed: speed };
+  }, [seed]);
+
+  const material = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: "#8c8377",
+        roughness: 0.95,
+        metalness: 0.05,
+        emissive: new THREE.Color(color),
+        emissiveIntensity: 0.24,
+      }),
+    [color],
+  );
 
   const position = useMemo(
     () => new THREE.Vector3(Math.sin(angle) * radius, 0, Math.cos(angle) * radius),
     [angle, radius],
   );
 
-  useFrame(({ camera }) => {
+  useFrame(({ camera }, delta) => {
+    rockRef.current?.rotateOnAxis(tumbleAxis, tumbleSpeed * delta);
+
     const group = groupRef.current;
     if (!group) return;
     // Recomputed from the live world position (not the static local one)
-    // since the parent ring keeps spinning underneath this card.
+    // since the parent belt keeps spinning underneath this rock.
     const worldPos = group.getWorldPosition(new THREE.Vector3());
     const normal = worldPos.clone().normalize();
     const viewDir = camera.position.clone().sub(worldPos).normalize();
@@ -60,16 +72,8 @@ export function SkillCard({ name, color, angle, radius }: SkillCardProps) {
   });
 
   return (
-    <group ref={groupRef} position={position} rotation={[0, angle, 0]}>
-      <mesh material={materials}>
-        <boxGeometry args={[CARD_WIDTH, CARD_HEIGHT, CARD_DEPTH]} />
-      </mesh>
-
-      {/* Category-color accent strip along the top of the front face */}
-      <mesh position={[0, CARD_HEIGHT / 2 - 0.06, CARD_DEPTH / 2 + 0.002]}>
-        <boxGeometry args={[CARD_WIDTH, 0.06, 0.01]} />
-        <meshBasicMaterial color={color} />
-      </mesh>
+    <group ref={groupRef} position={position}>
+      <mesh ref={rockRef} geometry={geometry} material={material} />
 
       <Html center distanceFactor={6} style={{ pointerEvents: "none" }}>
         <div
