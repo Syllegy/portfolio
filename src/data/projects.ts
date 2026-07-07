@@ -220,6 +220,57 @@ export const projects: Project[] = [
       "Better maintainability through reusable component development",
     ],
   },
+  {
+    slug: "reign-rtc",
+    title: "Reign Residential Treatment Center",
+    description:
+      "Ongoing frontend development, technical SEO, and performance optimization for a behavioral health facility's website.",
+    longDescription:
+      "Reign Residential Treatment Center is a behavioral health facility providing treatment for individuals seeking support for mental health and substance abuse recovery. The website serves as an informational resource for prospective patients and families while supporting lead generation through clear navigation, educational content, and search engine visibility. As part of the development team, I contribute to the ongoing maintenance, optimization, and expansion of the website through frontend development, technical SEO, performance optimization, and feature implementation.",
+    image: "/images/project-reign-rtc.png",
+    technologies: [
+      "Next.js",
+      "React",
+      "Node.js",
+      "WordPress",
+      "JavaScript",
+      "SCSS",
+      "GSAP",
+      "Vercel",
+      "SEMRush",
+    ],
+    liveUrl: "https://reignrtc.com/",
+    featured: true,
+    ongoing: true,
+    category: "Next.js",
+    problem:
+      "Because the website is actively maintained and continuously evolving, the primary challenge was introducing improvements while preserving the stability of the existing production environment, maintaining consistent design across newly developed pages, improving technical SEO without disrupting existing content, and ensuring responsive behavior stayed consistent across devices.",
+    solution:
+      "I contributed by developing reusable components that simplify future maintenance and feature development, building responsive layouts that integrate seamlessly with the existing design system, applying technical SEO best practices throughout new and existing pages, and optimizing frontend assets and rendering performance to improve Core Web Vitals.",
+    contributions: [
+      "Developed reusable frontend components to support long-term maintainability",
+      "Built responsive layouts for desktop, tablet, and mobile devices",
+      "Created new pages that integrate with the existing website architecture",
+      "Implemented technical SEO improvements",
+      "Optimized Core Web Vitals and frontend performance",
+      "Resolved frontend bugs and UI inconsistencies",
+      "Supported ongoing maintenance and feature development",
+    ],
+    challenges: [
+      "Maintaining consistent design across newly developed pages",
+      "Improving technical SEO without disrupting existing content",
+      "Enhancing frontend performance while introducing additional functionality",
+      "Ensuring responsive behavior remained consistent across multiple devices and screen sizes",
+    ],
+    results: [
+      "Improved technical SEO implementation",
+      "Better Core Web Vitals and frontend performance",
+      "Consistent responsive layouts across devices",
+      "Expansion of the website through new page development",
+      "Improved maintainability through reusable component architecture",
+      "Continued delivery of enhancements without disrupting production stability",
+    ],
+  },
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.featured);
