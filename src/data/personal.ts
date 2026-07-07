@@ -4,6 +4,8 @@ export const personal = {
   tagline: "Building modern websites that perform.",
   subheading:
     "Building modern, high-performance websites that combine exceptional user experiences with technical SEO best practices.",
+  heroSubheading:
+    "Lean, efficient websites built with the same density of purpose as the universe's most extreme objects, compact, but built to deliver.",
   bio: `I began my web development journey about a year ago after taking an interim position that introduced me to the industry. What started as temporary work quickly became a career path I genuinely enjoy.
 
 A close friend brought me onto his development team and mentored me through real-world projects, giving me hands-on experience with modern web development, technical SEO, and website maintenance.

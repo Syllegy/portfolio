@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AnimateIn } from "@/components/AnimateIn";
 import { ProjectsClient } from "./ProjectsClient";
+import { PagePlanet } from "@/components/PagePlanet";
 import { personal } from "@/data/personal";
 import { projects } from "@/data/projects";
 
@@ -16,7 +17,11 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   if (projects.length === 0) {
     return (
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+        <PagePlanet
+          variant="work"
+          className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+        />
         <AnimateIn className="mb-12">
           <SectionHeading
             title="Professional Work"
@@ -42,7 +47,11 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <PagePlanet
+        variant="work"
+        className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+      />
       <AnimateIn className="mb-12">
         <SectionHeading
           title="Professional Work"

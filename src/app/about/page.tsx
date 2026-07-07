@@ -7,6 +7,7 @@ import { Timeline } from "@/components/Timeline";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AnimateIn } from "@/components/AnimateIn";
 import { GitHubIcon } from "@/components/icons";
+import { PagePlanet } from "@/components/PagePlanet";
 import { personal } from "@/data/personal";
 
 export const metadata: Metadata = {
@@ -16,7 +17,11 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <PagePlanet
+        variant="about"
+        className="absolute -top-6 right-2 sm:right-8 w-28 h-28 sm:w-44 sm:h-44"
+      />
       <AnimateIn className="mb-16">
         <SectionHeading
           title="About Me"

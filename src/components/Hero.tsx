@@ -51,15 +51,15 @@ export function Hero() {
             variants={itemVariants}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
           >
-            Building Modern<br />
-            <span className="text-gradient">Websites</span> That Perform.
+            Small Footprint.<br />
+            <span className="text-gradient">Massive</span> Performance.
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
             className="mt-6 text-lg text-foreground/60 leading-relaxed max-w-xl"
           >
-            {personal.subheading}
+            {personal.heroSubheading}
           </motion.p>
 
           <motion.div

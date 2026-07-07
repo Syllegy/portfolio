@@ -49,11 +49,12 @@ export function StarField() {
       x: Math.random() * W,
       y: Math.random() * H,
       phase: Math.random(),
-      cycleLength: 7 + Math.random() * 9,
+      cycleLength: 22 + Math.random() * 26, // slow, chill breathing (22-48s per cycle)
     }));
 
     let scroll = 0;
     let rafId = 0;
+    let lastTime = 0;
 
     const onScroll = () => { scroll = window.scrollY; };
     const onResize = () => {
@@ -68,6 +69,8 @@ export function StarField() {
 
     const draw = (time: number) => {
       const t = time * 0.001;
+      const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.1) : 0;
+      lastTime = time;
       ctx.clearRect(0, 0, W, H);
 
       // Nebula clouds (blurred gradients)
@@ -120,7 +123,9 @@ export function StarField() {
       // under prefers-reduced-motion since it's subtle/small-scale, unlike
       // the larger nebula panning above.
       for (const fs of flareStars) {
-        fs.phase = (fs.phase + 1 / (fs.cycleLength * 60)) % 1;
+        // Time-based (not frame-based) so the breathing rate stays
+        // consistent regardless of the display's refresh rate.
+        fs.phase = (fs.phase + dt / fs.cycleLength) % 1;
 
         // Dormant → flare up (0.35-0.5) → peak → fall (0.5-0.65) → dormant
         let intensity = 0;
