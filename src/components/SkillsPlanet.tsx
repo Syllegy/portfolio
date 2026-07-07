@@ -13,6 +13,10 @@ export function SkillsPlanet() {
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 1.75]}
         onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
+        // R3F's canvas wrapper clips overflow by default, which cuts off
+        // skill-name labels (rendered as DOM elements via drei's Html) when
+        // they rotate near the globe's horizon and poke past the box.
+        style={{ overflow: "visible" }}
       >
         <SkillsGlobeScene />
         <OrbitControls
