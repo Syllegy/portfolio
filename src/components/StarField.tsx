@@ -116,37 +116,37 @@ export function StarField() {
         ctx.fill();
       }
 
-      // Flaring star-birth effect
-      if (!prefersReduced) {
-        for (const fs of flareStars) {
-          fs.phase = (fs.phase + 1 / (fs.cycleLength * 60)) % 1;
+      // Flaring star-birth effect — a small, slow breathing glow. Kept even
+      // under prefers-reduced-motion since it's subtle/small-scale, unlike
+      // the larger nebula panning above.
+      for (const fs of flareStars) {
+        fs.phase = (fs.phase + 1 / (fs.cycleLength * 60)) % 1;
 
-          // Dormant → flare up (0.35-0.5) → peak → fall (0.5-0.65) → dormant
-          let intensity = 0;
-          if (fs.phase >= 0.35 && fs.phase < 0.65) {
-            intensity = Math.sin(((fs.phase - 0.35) / 0.3) * Math.PI);
-          }
-          if (intensity < 0.015) continue;
-
-          const parallaxY = scroll * 0.17;
-          let y = (fs.y - parallaxY) % H;
-          if (y < 0) y += H;
-
-          const glowR = intensity * 20;
-          const grd = ctx.createRadialGradient(fs.x, y, 0, fs.x, y, glowR);
-          grd.addColorStop(0, `rgba(200,230,255,${(intensity * 0.85).toFixed(3)})`);
-          grd.addColorStop(0.45, `rgba(0,200,255,${(intensity * 0.35).toFixed(3)})`);
-          grd.addColorStop(1, "transparent");
-          ctx.fillStyle = grd;
-          ctx.beginPath();
-          ctx.arc(fs.x, y, glowR, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.beginPath();
-          ctx.arc(fs.x, y, 1.2 + intensity * 1.8, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,255,255,${intensity.toFixed(3)})`;
-          ctx.fill();
+        // Dormant → flare up (0.35-0.5) → peak → fall (0.5-0.65) → dormant
+        let intensity = 0;
+        if (fs.phase >= 0.35 && fs.phase < 0.65) {
+          intensity = Math.sin(((fs.phase - 0.35) / 0.3) * Math.PI);
         }
+        if (intensity < 0.015) continue;
+
+        const parallaxY = scroll * 0.17;
+        let y = (fs.y - parallaxY) % H;
+        if (y < 0) y += H;
+
+        const glowR = intensity * 20;
+        const grd = ctx.createRadialGradient(fs.x, y, 0, fs.x, y, glowR);
+        grd.addColorStop(0, `rgba(200,230,255,${(intensity * 0.85).toFixed(3)})`);
+        grd.addColorStop(0.45, `rgba(0,200,255,${(intensity * 0.35).toFixed(3)})`);
+        grd.addColorStop(1, "transparent");
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.arc(fs.x, y, glowR, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(fs.x, y, 1.2 + intensity * 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${intensity.toFixed(3)})`;
+        ctx.fill();
       }
 
       rafId = requestAnimationFrame(draw);
