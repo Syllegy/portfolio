@@ -15,12 +15,19 @@ const SKILL_ICON_SLUGS: Record<string, string> = {
   "SEMRush": "semrush",
   "Git": "git",
   "GitHub": "github",
-  "VS Code": "visualstudiocode",
   "Cursor": "cursor",
   "Vercel": "vercel",
 };
 
+// Simple Icons permanently removed the VS Code icon (Microsoft trademark
+// dispute — see simple-icons/simple-icons#10019), so no CDN built on that
+// library can serve it. Self-hosted here instead so it can't go 404 again.
+const LOCAL_ICONS: Record<string, string> = {
+  "VS Code": "/skill-icons/vscode.svg",
+};
+
 export function skillIconUrl(name: string): string | undefined {
+  if (LOCAL_ICONS[name]) return LOCAL_ICONS[name];
   const slug = SKILL_ICON_SLUGS[name];
   return slug ? `https://cdn.simpleicons.org/${slug}` : undefined;
 }
