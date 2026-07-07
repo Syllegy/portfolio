@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { personal } from "@/data/personal";
 
@@ -29,6 +28,7 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- close the mobile menu on route change
     setMenuOpen(false);
   }, [pathname]);
 
@@ -71,7 +71,6 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           <Button asChild size="sm" className="hidden md:flex">
             <Link href="/contact">Hire Me</Link>
           </Button>

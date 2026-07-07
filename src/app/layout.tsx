@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { GlobalBackground } from "@/components/GlobalBackground";
@@ -76,8 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceMono.variable} ${spaceGrotesk.variable} h-full`}
-      suppressHydrationWarning
+      className={`dark ${spaceMono.variable} ${spaceGrotesk.variable} h-full`}
     >
       <head>
         <script
@@ -86,17 +84,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <GlobalBackground />
-          <Navbar />
-          <main className="flex-1 pt-16">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <GlobalBackground />
+        <Navbar />
+        <main className="flex-1 pt-16">{children}</main>
+        <Footer />
       </body>
     </html>
   );
