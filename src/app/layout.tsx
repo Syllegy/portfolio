@@ -31,7 +31,6 @@ export const metadata: Metadata = {
     "Next.js",
     "Shopify",
     "WordPress",
-    "Freelance Developer",
     "Luca Stavole",
   ],
   authors: [{ name: personal.name, url: personal.domain }],

@@ -12,7 +12,7 @@ import { personal } from "@/data/personal";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `Learn more about ${personal.name}, a ${personal.title} available for freelance work.`,
+  description: `Learn more about ${personal.name}, a ${personal.title}.`,
 };
 
 export default function AboutPage() {

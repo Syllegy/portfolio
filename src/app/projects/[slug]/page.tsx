@@ -181,7 +181,7 @@ export default async function ProjectPage({ params }: Props) {
           <div>
             <h3 className="font-bold text-lg">Interested in working together?</h3>
             <p className="text-foreground/60 text-sm mt-1">
-              I&apos;m available for new freelance projects.
+              Let&apos;s talk about what you need.
             </p>
           </div>
           <div className="flex gap-3 shrink-0">

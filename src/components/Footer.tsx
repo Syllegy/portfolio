@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Code2 } from "lucide-react";
+import { Mail } from "lucide-react";
 import { GitHubIcon } from "./icons";
 import { personal } from "@/data/personal";
 
@@ -12,7 +12,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Link href="/" className="flex items-center gap-2 font-bold text-base mb-3">
-              <Code2 className="w-5 h-5 text-primary" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="" className="w-6 h-6 rounded-full" />
               {personal.name}
             </Link>
             <p className="text-sm text-foreground/60 leading-relaxed">

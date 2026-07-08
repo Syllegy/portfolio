@@ -16,7 +16,6 @@ I enjoy solving problems across the entire development cycle, from frontend inte
 
 Whether a project involves modernizing an outdated website, repairing existing functionality, improving performance, implementing technical SEO, or developing new features, I find practical solutions that deliver measurable results.`,
   location: "Remote / Worldwide",
-  availability: "Available for freelance work",
   email: "lucastavole@gmail.com",
   github: "https://github.com/syllegy",
   linkedin: "",

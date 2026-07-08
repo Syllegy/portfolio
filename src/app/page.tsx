@@ -72,7 +72,7 @@ export default function HomePage() {
       <section className="py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <AnimateIn>
-            <div className="rounded-2xl border border-border bg-card p-10 sm:p-16 text-center">
+            <div className="rounded-sm bg-card p-10 sm:p-16 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                 Have a project in mind?
               </h2>

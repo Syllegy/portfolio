@@ -9,7 +9,7 @@ import { personal } from "@/data/personal";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Get in touch with ${personal.name} for freelance web development and technical SEO.`,
+  description: `Get in touch with ${personal.name} for web development and technical SEO.`,
 };
 
 export default function ContactPage() {
