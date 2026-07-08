@@ -34,11 +34,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           </div>
         )}
-        {project.ongoing && (
-          <span className="absolute top-3 left-3 text-[11px] font-semibold px-2 py-1 rounded bg-emerald-500/90 text-white">
-            Ongoing
-          </span>
-        )}
       </Link>
 
       {/* Content */}
@@ -59,6 +54,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.ongoing && (
+            <span className="text-xs px-2 py-0.5 bg-green-500/10 rounded text-green-400">
+              Ongoing
+            </span>
+          )}
           {project.technologies.slice(0, 5).map((tech) => (
             <span key={tech} className="text-xs px-2 py-0.5 bg-muted rounded text-foreground/60">
               {tech}
