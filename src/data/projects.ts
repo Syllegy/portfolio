@@ -271,6 +271,56 @@ export const projects: Project[] = [
       "Continued delivery of enhancements without disrupting production stability",
     ],
   },
+  {
+    slug: "sanctuary-mh",
+    title: "Sanctuary Mental Health & Wellness",
+    description:
+      "Ongoing frontend development, technical SEO, and performance optimization for a mental health and substance abuse treatment provider's website.",
+    longDescription:
+      "Sanctuary Mental Health & Wellness provides comprehensive mental health and substance abuse treatment through evidence-based care and personalized treatment programs. The website serves as an informational resource for prospective patients and families while supporting patient outreach and lead generation. As part of the development team, I contribute to the ongoing maintenance, optimization, and enhancement of the platform through frontend development, technical SEO, and performance improvements.",
+    image: "/images/project-sanctuary-mh.png",
+    technologies: [
+      "Next.js",
+      "React",
+      "Node.js",
+      "WordPress",
+      "JavaScript",
+      "SCSS",
+      "GSAP",
+      "Vercel",
+      "SEMRush",
+    ],
+    liveUrl: "https://sanctuarymh.com/",
+    featured: true,
+    ongoing: true,
+    category: "Next.js",
+    problem:
+      "Working on a production healthcare platform required balancing continuous improvements with long-term stability, focusing on technical SEO optimization, responsive design consistency, and frontend performance improvements without disrupting existing functionality on a growing production website.",
+    solution:
+      "I contributed by developing reusable components to simplify future maintenance, improving responsive layouts across multiple screen sizes, applying technical SEO best practices throughout the website, optimizing frontend assets to improve Core Web Vitals, and refining the user interface through ongoing maintenance and incremental improvements.",
+    contributions: [
+      "Developed reusable frontend components",
+      "Built responsive layouts for desktop, tablet, and mobile devices",
+      "Implemented technical SEO improvements across key pages",
+      "Optimized Core Web Vitals and frontend performance",
+      "Improved accessibility and semantic HTML structure",
+      "Resolved frontend bugs and visual inconsistencies",
+      "Supported ongoing maintenance and feature development",
+    ],
+    challenges: [
+      "Technical SEO optimization",
+      "Responsive design consistency",
+      "Frontend performance improvements",
+      "Ongoing maintenance of a growing production website",
+    ],
+    results: [
+      "Improved technical SEO implementation",
+      "Better Core Web Vitals and page performance",
+      "Enhanced accessibility and usability",
+      "More consistent responsive layouts",
+      "Continued rollout of new features and ongoing website enhancements",
+    ],
+  },
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.featured);
