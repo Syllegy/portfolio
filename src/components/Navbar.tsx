@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { personal } from "@/data/personal";
@@ -47,7 +47,8 @@ export function Navbar() {
           className="flex items-center gap-2 font-bold text-lg hover:text-primary transition-colors"
           aria-label="Home"
         >
-          <Code2 className="w-6 h-6 text-primary" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="" className="w-8 h-8 rounded-full" />
           <span className="hidden sm:inline">{personal.name}</span>
         </Link>
 
