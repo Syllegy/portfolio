@@ -321,6 +321,56 @@ export const projects: Project[] = [
       "Continued rollout of new features and ongoing website enhancements",
     ],
   },
+  {
+    slug: "prevail-recovery-center",
+    title: "Prevail Recovery Center",
+    description:
+      "Ongoing frontend development, technical SEO, and performance optimization for a drug and alcohol rehabilitation facility's website.",
+    longDescription:
+      "Prevail Recovery Center is a drug and alcohol rehabilitation facility that provides comprehensive addiction treatment through evidence-based care, outpatient programs, and personalized recovery services. The website serves as an informational resource for prospective patients and their families while supporting patient outreach and lead generation. As part of the development team, I contribute to the ongoing maintenance, optimization, and enhancement of the platform through frontend development, technical SEO, and performance improvements.",
+    image: "/images/project-prevail-recovery.png",
+    technologies: [
+      "Next.js",
+      "React",
+      "Node.js",
+      "WordPress",
+      "JavaScript",
+      "SCSS",
+      "GSAP",
+      "Vercel",
+      "SEMRush",
+    ],
+    liveUrl: "https://prevailrecoverycenter.com/",
+    featured: true,
+    ongoing: true,
+    category: "Next.js",
+    problem:
+      "Working on a live production healthcare platform required balancing ongoing feature development with long-term stability and maintainability, focusing on improving technical SEO across existing pages, maintaining responsive layouts across multiple devices, and enhancing performance without disrupting production functionality.",
+    solution:
+      "I contributed by developing reusable frontend components for easier long-term maintenance, applying technical SEO best practices throughout the website, optimizing frontend assets and rendering performance to improve Core Web Vitals, and refining responsive layouts and frontend styling through incremental updates.",
+    contributions: [
+      "Developed reusable frontend components",
+      "Built responsive layouts across desktop and mobile devices",
+      "Implemented technical SEO improvements",
+      "Optimized Core Web Vitals and frontend performance",
+      "Improved accessibility and semantic HTML structure",
+      "Resolved frontend bugs and UI inconsistencies",
+      "Supported ongoing website maintenance and feature development",
+    ],
+    challenges: [
+      "Improving technical SEO across existing pages",
+      "Maintaining responsive layouts across multiple devices",
+      "Enhancing website performance",
+      "Supporting continuous improvements without disrupting production functionality",
+    ],
+    results: [
+      "Improved technical SEO implementation",
+      "Better Core Web Vitals and page performance",
+      "Enhanced accessibility and usability",
+      "More consistent responsive layouts across devices",
+      "Ongoing feature enhancements while maintaining production stability",
+    ],
+  },
 ];
 
 export const getFeaturedProjects = () => projects.filter((p) => p.featured);
