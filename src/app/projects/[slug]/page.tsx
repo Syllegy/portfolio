@@ -49,9 +49,8 @@ export default async function ProjectPage({ params }: Props) {
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{project.category}</Badge>
             {project.ongoing && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400/90">
-                maintaining
-                <span className="inline-block w-[4px] h-[12px] bg-emerald-400/80 animate-pulse translate-y-[1px]" />
+              <span className="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-500/90 text-white">
+                Ongoing
               </span>
             )}
           </div>

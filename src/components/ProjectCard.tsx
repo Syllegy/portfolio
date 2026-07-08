@@ -8,18 +8,7 @@ interface ProjectCardProps {
   project: Project;
 }
 
-function getDomain(url?: string): string {
-  if (!url) return "";
-  try {
-    return new URL(url).host.replace(/^www\./, "");
-  } catch {
-    return url;
-  }
-}
-
 export function ProjectCard({ project }: ProjectCardProps) {
-  const domain = getDomain(project.liveUrl);
-
   return (
     <div className="group flex flex-col h-full overflow-hidden bg-card rounded-sm transition-all duration-200 hover:-translate-y-1">
       {/* Image */}
@@ -45,26 +34,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           </div>
         )}
-        {/* Browser-chrome style status bar instead of a floating "Live" badge —
-            matches the mock editor window look used in the Experience section
-            (Timeline.tsx) so the site reads as one consistent, hand-built
-            aesthetic rather than a generic SaaS-dashboard status pill. */}
-        <div className="absolute bottom-0 inset-x-0 flex items-center gap-2 px-3 py-1.5 bg-[#0d1117]/92 backdrop-blur-sm border-t border-white/10">
-          <div className="flex gap-1 shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff5f56]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ffbd2e]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#27c93f]" />
-          </div>
-          {domain && (
-            <span className="text-[10px] font-mono text-white/45 truncate flex-1">{domain}</span>
-          )}
-          {project.ongoing && (
-            <span className="flex items-center gap-1 text-[10px] font-mono text-emerald-400/90 shrink-0 ml-auto">
-              maintaining
-              <span className="inline-block w-[4px] h-[10px] bg-emerald-400/80 animate-pulse translate-y-[1px]" />
-            </span>
-          )}
-        </div>
+        {project.ongoing && (
+          <span className="absolute top-3 left-3 text-[11px] font-semibold px-2 py-1 rounded bg-emerald-500/90 text-white">
+            Ongoing
+          </span>
+        )}
       </Link>
 
       {/* Content */}
